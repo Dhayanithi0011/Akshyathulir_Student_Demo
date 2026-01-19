@@ -117,63 +117,63 @@ const topInvestors = [
 ];
 
 const rows = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     name: 'EcoDrive AI',  // Added 'name' field for the renderCell
-    startup: 'EcoDrive AI', 
+    startup: 'EcoDrive AI',
     founder: 'Arjun V.',
     sector: 'CleanTech',
-    stage: 'MVP', 
+    stage: 'MVP',
     funding: '₹2,50,000',
     growth: 25
   },
-  { 
-    id: 2, 
+  {
+    id: 2,
     name: 'HealthTech Buddy',
-    startup: 'HealthTech Buddy', 
+    startup: 'HealthTech Buddy',
     founder: 'Sara Khan',
     sector: 'HealthTech',
-    stage: 'Scaling', 
+    stage: 'Scaling',
     funding: '₹12,00,000',
     growth: 42
   },
-  { 
-    id: 3, 
+  {
+    id: 3,
     name: 'EduFlow',
-    startup: 'EduFlow', 
+    startup: 'EduFlow',
     founder: 'Leo Das',
     sector: 'EdTech',
-    stage: 'Ideation', 
+    stage: 'Ideation',
     funding: '₹50,000',
     growth: 8
   },
-  { 
-    id: 4, 
+  {
+    id: 4,
     name: 'SolarGrid',
-    startup: 'SolarGrid', 
+    startup: 'SolarGrid',
     founder: 'Meera R.',
     sector: 'Energy',
-    stage: 'Scaling', 
+    stage: 'Scaling',
     funding: '₹8,40,000',
     growth: 35
   },
-  { 
-    id: 5, 
+  {
+    id: 5,
     name: 'AgriIntel',
-    startup: 'AgriIntel', 
+    startup: 'AgriIntel',
     founder: 'Rajesh K.',
     sector: 'AgriTech',
-    stage: 'Prototype', 
+    stage: 'Prototype',
     funding: '₹1,20,000',
     growth: 18
   },
 ];
 
 const columns = [
-  { 
-    field: 'startup', 
-    headerName: 'Startup Name', 
-    flex: 1.2, 
+  {
+    field: 'startup',
+    headerName: 'Startup Name',
+    flex: 1.2,
     renderCell: (params) => (
       <Stack direction="row" alignItems="center" spacing={1}>
         <Avatar sx={{ width: 32, height: 32, bgcolor: COLORS.primaryGreen + '20', color: COLORS.primaryGreen }}>
@@ -190,46 +190,46 @@ const columns = [
       </Stack>
     )
   },
-  { 
-    field: 'sector', 
-    headerName: 'Sector', 
+  {
+    field: 'sector',
+    headerName: 'Sector',
     flex: 0.8,
     renderCell: (params) => (
-      <Chip 
-        label={params.value} 
+      <Chip
+        label={params.value}
         size="small"
-        sx={{ 
+        sx={{
           bgcolor: `${COLORS.primaryGreen}10`,
           color: COLORS.primaryGreen,
           fontWeight: 'bold'
-        }} 
+        }}
       />
     )
   },
-  { 
-    field: 'stage', 
-    headerName: 'Stage', 
+  {
+    field: 'stage',
+    headerName: 'Stage',
     flex: 0.8,
     renderCell: (params) => (
-      <Chip 
-        label={params.value} 
+      <Chip
+        label={params.value}
         size="small"
-        sx={{ 
-          bgcolor: params.value === 'Scaling' ? '#e8f5e9' : 
-                  params.value === 'MVP' ? '#e3f2fd' :
-                  params.value === 'Prototype' ? '#fff3e0' : '#f5f5f5',
-          color: params.value === 'Scaling' ? COLORS.chartGreen : 
-                params.value === 'MVP' ? COLORS.info :
-                params.value === 'Prototype' ? COLORS.warning : COLORS.textGrey,
-          fontWeight: 'bold', 
+        sx={{
+          bgcolor: params.value === 'Scaling' ? '#e8f5e9' :
+            params.value === 'MVP' ? '#e3f2fd' :
+              params.value === 'Prototype' ? '#fff3e0' : '#f5f5f5',
+          color: params.value === 'Scaling' ? COLORS.chartGreen :
+            params.value === 'MVP' ? COLORS.info :
+              params.value === 'Prototype' ? COLORS.warning : COLORS.textGrey,
+          fontWeight: 'bold',
           borderRadius: '6px'
-        }} 
+        }}
       />
     )
   },
-  { 
-    field: 'funding', 
-    headerName: 'Funding', 
+  {
+    field: 'funding',
+    headerName: 'Funding',
     flex: 0.8,
     renderCell: (params) => (
       <Typography variant="body2" fontWeight="700" color={COLORS.primaryGreen}>
@@ -237,9 +237,9 @@ const columns = [
       </Typography>
     )
   },
-  { 
-    field: 'growth', 
-    headerName: 'Growth', 
+  {
+    field: 'growth',
+    headerName: 'Growth',
     flex: 0.7,
     renderCell: (params) => (
       <Stack direction="row" alignItems="center" spacing={0.5}>
@@ -256,10 +256,9 @@ const columns = [
   },
 ];
 
-// --- Enhanced Sub-components ---
 
 const StatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
-  <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #edf2f0' }}>
+  <Card sx={{ height: '100%', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #edf2f0' }}>
     <CardContent sx={{ p: 3 }}>
       <Stack direction="row" justifyContent="space-between">
         <Avatar sx={{ bgcolor: `${COLORS.primaryGreen}10`, color: COLORS.primaryGreen }}>
@@ -272,13 +271,13 @@ const StatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
       <Box sx={{ mt: 2 }}>
         <Typography variant="h4" fontWeight="800" color={COLORS.primaryGreen}>{value}</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 0.5 }}>
-          <Typography variant="caption" sx={{ 
-            bgcolor: trend === 'negative' ? '#ffebee' : '#e8f5e9', 
-            px: 1, 
-            py: 0.2, 
-            borderRadius: '4px', 
-            color: trend === 'negative' ? '#f44336' : COLORS.accentGreen, 
-            fontWeight: 'bold' 
+          <Typography variant="caption" sx={{
+            bgcolor: trend === 'negative' ? '#ffebee' : '#e8f5e9',
+            px: 1,
+            py: 0.2,
+            borderRadius: '4px',
+            color: trend === 'negative' ? '#f44336' : COLORS.accentGreen,
+            fontWeight: 'bold'
           }}>
             {subValue}
           </Typography>
@@ -291,7 +290,7 @@ const StatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
 );
 
 const MetricCard = ({ title, value, change, icon, color }) => (
-  <Paper sx={{ p: 2.5, borderRadius: '12px', border: `1px solid ${COLORS.border}` }}>
+  <Paper sx={{ height: '100%', p: 2.5, borderRadius: '12px', border: `1px solid ${COLORS.border}` }}>
     <Stack direction="row" alignItems="center" spacing={2}>
       <Avatar sx={{ bgcolor: color + '15', color: color, width: 40, height: 40 }}>
         {icon}
@@ -304,7 +303,7 @@ const MetricCard = ({ title, value, change, icon, color }) => (
           <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
             {value}
           </Typography>
-          <Typography variant="caption" sx={{ 
+          <Typography variant="caption" sx={{
             color: change.includes('+') ? COLORS.accentGreen : change.includes('-') ? '#f44336' : COLORS.textGrey,
             fontWeight: 'bold'
           }}>
@@ -333,7 +332,7 @@ const ChartContainer = ({ children, height = 300, minHeight = 200 }) => {
 
     updateDimensions();
     const resizeObserver = new ResizeObserver(updateDimensions);
-    
+
     if (containerRef.current) {
       resizeObserver.observe(containerRef.current);
     }
@@ -344,19 +343,18 @@ const ChartContainer = ({ children, height = 300, minHeight = 200 }) => {
   }, []);
 
   return (
-    <Box 
+    <Box
       ref={containerRef}
-      sx={{ 
+      sx={{
         height: height,
         minHeight: minHeight,
         width: '100%',
-        minWidth: '100%',
         position: 'relative'
       }}
     >
-      <Box sx={{ 
-        width: '100%', 
-        height: '100%', 
+      <Box sx={{
+        width: '100%',
+        height: '100%',
         minWidth: '100%',
         minHeight: minHeight
       }}>
@@ -386,19 +384,19 @@ export default function EntrepreneurHub() {
     const timer = setTimeout(() => {
       setChartKey(prev => prev + 1);
     }, 100);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <Box sx={{ 
-      flexGrow: 1, 
-      p: { xs: 2, sm: 3, md: 4 }, 
-      bgcolor: COLORS.background, 
+    <Box sx={{
+      flexGrow: 1,
+      p: { xs: 2, sm: 3, md: 4 },
+      bgcolor: COLORS.background,
       minHeight: '100vh',
       overflowX: 'hidden'
     }}>
-      
+
       {/* Header Area */}
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', md: 'center' }} sx={{ mb: 4 }} spacing={2}>
         <Box>
@@ -409,15 +407,15 @@ export default function EntrepreneurHub() {
             <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', alignItems: 'center' }}>
               <CalendarMonth sx={{ fontSize: 16, mr: 0.5 }} /> Academic Year 2025-26 | IIT Madras
             </Typography>
-            <Chip 
-              icon={<LocalFireDepartment sx={{ fontSize: '16px !important' }}/>} 
-              label="12 New Ideas this week" 
-              size="small" 
-              sx={{ 
-                bgcolor: '#fff', 
+            <Chip
+              icon={<LocalFireDepartment sx={{ fontSize: '16px !important' }} />}
+              label="12 New Ideas this week"
+              size="small"
+              sx={{
+                bgcolor: '#fff',
                 fontWeight: 'bold',
                 border: `1px solid ${COLORS.primaryGreen}20`
-              }} 
+              }}
             />
           </Stack>
         </Box>
@@ -448,63 +446,48 @@ export default function EntrepreneurHub() {
       {/* Key Performance Metrics */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard 
-            title="Active Incubates" 
-            value="42" 
-            icon={<RocketLaunch fontSize="small" />} 
-            subValue="+14%" 
+          <StatCard
+            title="Active Incubates"
+            value="42"
+            icon={<RocketLaunch fontSize="small" />}
+            subValue="+14%"
             tooltip="Currently active startups in incubation"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard 
-            title="Committed Funding" 
-            value="₹2.4Cr" 
-            icon={<MonetizationOn fontSize="small" />} 
-            subValue="+8.2%" 
+          <StatCard
+            title="Committed Funding"
+            value="₹2.4Cr"
+            icon={<MonetizationOn fontSize="small" />}
+            subValue="+8.2%"
             tooltip="Total funding raised this academic year"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard 
-            title="Student Founders" 
-            value="128" 
-            icon={<Groups fontSize="small" />} 
-            subValue="+5" 
+          <StatCard
+            title="Student Founders"
+            value="128"
+            icon={<Groups fontSize="small" />}
+            subValue="+5"
             tooltip="Active student entrepreneurs"
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard 
-            title="Success Rate" 
-            value="68%" 
-            icon={<Stars fontSize="small" />} 
-            subValue="+3.2%" 
+          <StatCard
+            title="Success Rate"
+            value="68%"
+            icon={<Stars fontSize="small" />}
+            subValue="+3.2%"
             tooltip="Startups that secured funding"
           />
         </Grid>
-      </Grid>
-
-      {/* Monthly Activity Metrics */}
-      <Grid container spacing={2} sx={{ mb: 4 }}>
-        {monthlyMetrics.map((metric, index) => (
-          <Grid item xs={6} sm={3} key={index}>
-            <MetricCard 
-              title={metric.metric}
-              value={metric.value}
-              change={metric.change}
-              icon={metric.icon}
-              color={COLORS.primaryGreen}
-            />
-          </Grid>
-        ))}
       </Grid>
 
       {/* Main Charts Section */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {/* Funding Trajectory with Goals */}
         <Grid item xs={12} md={8}>
-          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3 }}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3,height: '90%' }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
               <Box>
                 <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
@@ -515,11 +498,11 @@ export default function EntrepreneurHub() {
                 </Typography>
               </Box>
               <Stack direction="row" spacing={1}>
-                <Chip 
-                  icon={<TrendingUp sx={{ fontSize: 14 }} />} 
-                  label="₹24L Avg/Month" 
-                  size="small" 
-                  sx={{ bgcolor: COLORS.primaryGreen, color: '#fff' }} 
+                <Chip
+                  icon={<TrendingUp sx={{ fontSize: 14 }} />}
+                  label="₹24L Avg/Month"
+                  size="small"
+                  sx={{ bgcolor: COLORS.primaryGreen, color: '#fff' }}
                 />
                 <Chip label={timeRange} size="small" variant="outlined" />
               </Stack>
@@ -528,58 +511,58 @@ export default function EntrepreneurHub() {
               <AreaChart data={fundingData} key={chartKey}>
                 <defs>
                   <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={COLORS.accentGreen} stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor={COLORS.accentGreen} stopOpacity={0}/>
+                    <stop offset="5%" stopColor={COLORS.accentGreen} stopOpacity={0.3} />
+                    <stop offset="95%" stopColor={COLORS.accentGreen} stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorGoal" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={COLORS.warning} stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor={COLORS.warning} stopOpacity={0}/>
+                    <stop offset="5%" stopColor={COLORS.warning} stopOpacity={0.1} />
+                    <stop offset="95%" stopColor={COLORS.warning} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                <XAxis 
-                  dataKey="month" 
-                  axisLine={false} 
-                  tickLine={false} 
-                  tick={{fill: COLORS.textGrey, fontSize: 12}} 
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: COLORS.textGrey, fontSize: 12 }}
                 />
-                <YAxis 
-                  axisLine={false} 
-                  tickLine={false} 
-                  tick={{fill: COLORS.textGrey, fontSize: 12}} 
-                  tickFormatter={(value) => `₹${value/100000}L`} 
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: COLORS.textGrey, fontSize: 12 }}
+                  tickFormatter={(value) => `₹${value / 100000}L`}
                 />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                   formatter={(value, name) => {
-                    if (name === 'amount' || name === 'goal') return [`₹${value/100000}L`, name === 'amount' ? 'Raised' : 'Target'];
+                    if (name === 'amount' || name === 'goal') return [`₹${value / 100000}L`, name === 'amount' ? 'Raised' : 'Target'];
                     return [value, name];
                   }}
                 />
                 <Legend />
-                <Area 
-                  type="monotone" 
-                  dataKey="goal" 
-                  stroke={COLORS.warning} 
+                <Area
+                  type="monotone"
+                  dataKey="goal"
+                  stroke={COLORS.warning}
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   fillOpacity={0.1}
                   fill="url(#colorGoal)"
                   name="Monthly Target"
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="amount" 
-                  stroke={COLORS.accentGreen} 
-                  strokeWidth={3} 
-                  fillOpacity={1} 
-                  fill="url(#colorAmount)" 
+                <Area
+                  type="monotone"
+                  dataKey="amount"
+                  stroke={COLORS.accentGreen}
+                  strokeWidth={3}
+                  fillOpacity={1}
+                  fill="url(#colorAmount)"
                   name="Funds Raised"
                 />
-                <Line 
-                  type="monotone" 
-                  dataKey="startups" 
-                  stroke={COLORS.info} 
+                <Line
+                  type="monotone"
+                  dataKey="startups"
+                  stroke={COLORS.info}
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   name="Active Startups"
@@ -605,7 +588,7 @@ export default function EntrepreneurHub() {
 
         {/* Sector Distribution with Details */}
         <Grid item xs={12} md={4}>
-          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '100%' }}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '90%' }}>
             <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}>
               <Box>
                 <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
@@ -615,13 +598,13 @@ export default function EntrepreneurHub() {
                   Distribution by industry & funding
                 </Typography>
               </Box>
-              <Chip 
-                label={`${sectorData.reduce((acc, curr) => acc + curr.startups, 0)} Startups`} 
-                size="small" 
+              <Chip
+                label={`${sectorData.reduce((acc, curr) => acc + curr.startups, 0)} Startups`}
+                size="small"
                 sx={{ bgcolor: `${COLORS.primaryGreen}15`, color: COLORS.primaryGreen }}
               />
             </Stack>
-            
+
             <SimpleChartContainer height={200}>
               <PieChart>
                 <Pie
@@ -635,7 +618,7 @@ export default function EntrepreneurHub() {
                     <Cell key={`cell-${index}`} fill={[COLORS.primaryGreen, COLORS.accentGreen, '#388e3c', '#81c784'][index]} />
                   ))}
                 </Pie>
-                <Tooltip 
+                <Tooltip
                   formatter={(value, name, props) => {
                     if (name === 'value') return [`${value}%`, 'Market Share'];
                     if (name === 'startups') return [value, 'Startups'];
@@ -648,9 +631,9 @@ export default function EntrepreneurHub() {
 
             <Stack spacing={2} sx={{ mt: 3 }}>
               {sectorData.map((item, index) => (
-                <Box key={item.name} sx={{ 
-                  p: 2, 
-                  borderRadius: '8px', 
+                <Box key={item.name} sx={{
+                  p: 2,
+                  borderRadius: '8px',
                   border: `1px solid ${COLORS.border}`,
                   bgcolor: index === 0 ? `${COLORS.primaryGreen}05` : 'transparent'
                 }}>
@@ -678,8 +661,24 @@ export default function EntrepreneurHub() {
         </Grid>
       </Grid>
 
+
+      {/* Monthly Activity Metrics */}
+      <Grid container spacing={2} sx={{ mb: 4 }}>
+        {monthlyMetrics.map((metric, index) => (
+          <Grid item xs={12} sm={6} md={3} key={index}>
+            <MetricCard
+              title={metric.metric}
+              value={metric.value}
+              change={metric.change}
+              icon={metric.icon}
+              color={COLORS.primaryGreen}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
       {/* Stage Analysis and Top Investors */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
+      <Grid container spacing={3} sx={{ my: 5 }}>
         {/* Stage-wise Performance */}
         <Grid item xs={12} md={6}>
           <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '100%' }}>
@@ -699,35 +698,35 @@ export default function EntrepreneurHub() {
                         <Typography variant="caption" color="textSecondary">Avg: {stage.avgFunding}</Typography>
                       </Box>
                     </Stack>
-                    <Chip 
-                      label={stage.successRate} 
-                      size="small" 
-                      sx={{ 
+                    <Chip
+                      label={stage.successRate}
+                      size="small"
+                      sx={{
                         bgcolor: parseFloat(stage.successRate) > 50 ? '#e8f5e9' : '#fff3e0',
                         color: parseFloat(stage.successRate) > 50 ? COLORS.chartGreen : COLORS.warning,
                         fontWeight: 'bold'
                       }}
                     />
                   </Stack>
-                  <LinearProgress 
-                    variant="determinate" 
-                    value={parseFloat(stage.successRate)} 
-                    sx={{ 
-                      height: 8, 
-                      borderRadius: 5, 
+                  <LinearProgress
+                    variant="determinate"
+                    value={parseFloat(stage.successRate)}
+                    sx={{
+                      height: 8,
+                      borderRadius: 5,
                       bgcolor: '#f0f0f0',
-                      '& .MuiLinearProgress-bar': { 
+                      '& .MuiLinearProgress-bar': {
                         bgcolor: parseFloat(stage.successRate) > 50 ? COLORS.accentGreen : COLORS.warning,
                         borderRadius: 5
                       }
-                    }} 
+                    }}
                   />
                 </Box>
               ))}
             </Stack>
-            
+
             <Divider sx={{ my: 3 }} />
-            
+
             <Typography variant="subtitle2" fontWeight="700" color={COLORS.primaryGreen} gutterBottom>
               Incubation Pipeline Health
             </Typography>
@@ -759,7 +758,7 @@ export default function EntrepreneurHub() {
                 View All
               </Button>
             </Stack>
-            
+
             <Stack spacing={2}>
               {topInvestors.map((investor, index) => (
                 <Paper key={investor.name} sx={{ p: 2, borderRadius: '8px', border: `1px solid ${COLORS.border}` }}>
@@ -782,19 +781,19 @@ export default function EntrepreneurHub() {
                       </Typography>
                     </Box>
                   </Stack>
-                  <LinearProgress 
-                    variant="determinate" 
-                    value={(investor.investments / 12) * 100} 
-                    sx={{ 
+                  <LinearProgress
+                    variant="determinate"
+                    value={(investor.investments / 12) * 100}
+                    sx={{
                       mt: 1.5,
-                      height: 4, 
-                      borderRadius: 2, 
+                      height: 4,
+                      borderRadius: 2,
                       bgcolor: '#f0f0f0',
-                      '& .MuiLinearProgress-bar': { 
+                      '& .MuiLinearProgress-bar': {
                         bgcolor: COLORS.accentGreen,
                         borderRadius: 2
                       }
-                    }} 
+                    }}
                   />
                 </Paper>
               ))}
@@ -818,7 +817,7 @@ export default function EntrepreneurHub() {
       </Grid>
 
       {/* Portfolio Overview with Enhanced Details */}
-      <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+      <Card sx={{ borderRadius: '16px', mt: 10, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
         <Box sx={{ p: 3, borderBottom: '1px solid #f0f0f0', bgcolor: '#fafafa' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
@@ -844,25 +843,25 @@ export default function EntrepreneurHub() {
             rows={rows}
             columns={columns}
             pageSizeOptions={[5, 10]}
-            initialState={{ 
-              pagination: { 
-                paginationModel: { pageSize: 5 } 
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 5 }
               },
               sorting: {
                 sortModel: [{ field: 'funding', sort: 'desc' }]
               }
             }}
-            sx={{ 
+            sx={{
               border: 'none',
-              '& .MuiDataGrid-columnHeaders': { 
-                bgcolor: '#fafafa', 
+              '& .MuiDataGrid-columnHeaders': {
+                bgcolor: '#fafafa',
                 color: COLORS.primaryGreen,
                 fontWeight: '800',
                 fontSize: '0.85rem',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
               },
-              '& .MuiDataGrid-cell': { 
+              '& .MuiDataGrid-cell': {
                 borderBottom: '1px solid #f5f5f5',
                 py: 2
               },

@@ -46,7 +46,8 @@ const dataByFilter = {
       { title: "Active Startups", value: "42", change: "+12%", icon: <RocketLaunch />, color: "#2E8B57" },
       { title: "IP / Patents", value: "18", change: "+8%", icon: <Gavel />, color: "#4682B4" },
       { title: "Industry Partners", value: "24", change: "+15%", icon: <Handshake />, color: "#FF8C00" },
-      { title: "Research Projects", value: "128", change: "+22%", icon: <Science />, color: "#9C27B0" }
+      { title: "Research Projects", value: "128", change: "+22%", icon: <Science />, color: "#9C27B0" },
+      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#b08727" }
     ],
     // DATA FROM YOUR IMAGE (Adjusted for monthly)
     kpiStats: [
@@ -65,7 +66,8 @@ const dataByFilter = {
       { title: "Active Startups", value: "58", change: "+25%", icon: <RocketLaunch />, color: "#2E8B57" },
       { title: "IP / Patents", value: "24", change: "+33%", icon: <Gavel />, color: "#4682B4" },
       { title: "Industry Partners", value: "32", change: "+20%", icon: <Handshake />, color: "#FF8C00" },
-      { title: "Research Projects", value: "156", change: "+18%", icon: <Science />, color: "#9C27B0" }
+      { title: "Research Projects", value: "156", change: "+18%", icon: <Science />, color: "#9C27B0" },
+      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#b08727" }
     ],
     // DATA EXACTLY AS PER YOUR IMAGE
     kpiStats: [
@@ -84,7 +86,8 @@ const dataByFilter = {
       { title: "Active Startups", value: "142", change: "+45%", icon: <RocketLaunch />, color: "#2E8B57" },
       { title: "IP / Patents", value: "84", change: "+52%", icon: <Gavel />, color: "#4682B4" },
       { title: "Industry Partners", value: "76", change: "+30%", icon: <Handshake />, color: "#FF8C00" },
-      { title: "Research Projects", value: "412", change: "+25%", icon: <Science />, color: "#9C27B0" }
+      { title: "Research Projects", value: "412", change: "+25%", icon: <Science />, color: "#9C27B0" },
+      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#b08727" }
     ],
     kpiStats: [
       { title: "Industry Collaborations", subtitle: "Active partnerships", value: "156", change: "+35%", icon: <BusinessCenter />, color: "#15573F" },
@@ -175,7 +178,7 @@ export default function MainDash() {
         {/* Top Overview Row */}
         <Grid container spacing={3} sx={{ mb: 4 }}>
           {currentData.stats.map((stat, i) => (
-            <Grid item xs={12} sm={6} md={3} key={i}>
+            <Grid item xs={12} sm={6} md={2} key={i}>
                 {/* Standard Stat Card */}
                 <Card sx={{ borderRadius: '10px', border: `1px solid ${COLORS.borderLight}`, boxShadow: 'none' }}>
                     <CardContent>

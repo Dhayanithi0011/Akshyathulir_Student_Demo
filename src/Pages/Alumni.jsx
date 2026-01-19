@@ -271,7 +271,7 @@ const IdeaCard = memo(({ title, domain, description, stage }) => (
 ));
 
 const AnalyticsChart = memo(() => (
-  <Paper sx={{ ...CARD_SX, p: 3, height: '100%' }}>
+  <Paper sx={{ ...CARD_SX, p: 3, height: '90%' }}>
     <Typography variant="h6" fontWeight={800} color={COLORS.accent} mb={2}>Growth Performance</Typography>
     <Box height={280}>
       <ResponsiveContainer width="100%" height="100%">
@@ -341,7 +341,7 @@ const AnalyticsChart = memo(() => (
 ));
 
 const FundingPieChart = memo(() => (
-  <Paper sx={{ ...CARD_SX, p: 3, height: '100%' }}>
+  <Paper sx={{ ...CARD_SX, p: 3, height: '90%' }}>
     <Typography variant="h6" fontWeight={800} color={COLORS.accent} mb={2}>Funding Distribution</Typography>
     <Box height={280}>
       <ResponsiveContainer width="100%" height="100%">
@@ -388,7 +388,7 @@ const FundingPieChart = memo(() => (
 ));
 
 const StartupIdeasChart = memo(() => (
-  <Paper sx={{ ...CARD_SX, p: 3, height: '100%' }}>
+  <Paper sx={{ ...CARD_SX, p: 3, height: '90%'}}>
     <Typography variant="h6" fontWeight={800} color={COLORS.accent} mb={2}>Startup Ideas by Domain</Typography>
     <Box height={280}>
       <ResponsiveContainer width="100%" height="100%">
@@ -432,7 +432,7 @@ const StartupIdeasChart = memo(() => (
   </Paper>
 ));
 
-const PortfolioTable = memo(() => (
+ const PortfolioTable = memo(() => (
   <TableContainer component={Paper} sx={{ ...CARD_SX, overflow: 'hidden' }}>
     <Box p={3} bgcolor="white" borderBottom={`1px solid ${COLORS.border}`}>
       <Typography variant="h6" fontWeight={800} color={COLORS.accent}>Recent Portfolio</Typography>
@@ -463,7 +463,7 @@ const PortfolioTable = memo(() => (
 ));
 
 const AlumniSection = memo(() => (
-  <Paper sx={{ ...CARD_SX, p: 4 }}>
+  <Paper sx={{ ...CARD_SX, p: 4,mt:6 }}>
     <Typography variant="h6" fontWeight={800} color={COLORS.accent} mb={3}>Alumni Network</Typography>
     <Grid container spacing={3}>
       {ALUMNI_DATA.map(a => (

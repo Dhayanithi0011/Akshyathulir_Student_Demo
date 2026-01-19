@@ -115,26 +115,6 @@ const expertPool = [
     rating: 4.6,
     status: 'Active'
   },
-  { 
-    id: 3, 
-    name: 'Anita Desai', 
-    company: 'Infosys', 
-    domain: 'Blockchain', 
-    availability: 'Weekends', 
-    sessions: 32,
-    rating: 4.9,
-    status: 'Highly Active'
-  },
-  { 
-    id: 4, 
-    name: 'Michael Rodriguez', 
-    company: 'Google', 
-    domain: 'Cloud Computing', 
-    availability: 'Mon, Fri', 
-    sessions: 15,
-    rating: 4.5,
-    status: 'Active'
-  },
 ];
 
 const upcomingEvents = [
@@ -335,9 +315,9 @@ export default function IndustryCollaboration() {
       </Stack>
 
       {/* Top Stats */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
+      <Grid container spacing={3} sx={{ mb: 10 }}>
         {collabStats.map((stat, i) => (
-          <Grid item xs={12} sm={6} md={4} lg={2} key={i}>
+          <Grid item xs={12} sm={6} md={4} lg={2} key={i} sx={{ height: "140px" }}>
             <StatCard {...stat} />
           </Grid>
         ))}
