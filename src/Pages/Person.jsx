@@ -458,6 +458,81 @@ export default function Person() {
                 />
               </Grid>
 
+              <Grid xs={12}>
+                <Typography variant="h6" sx={subHeaderStyle}>
+                 Vice Principal Details
+                </Typography>
+              </Grid>
+
+              <Grid xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  label="Vice Principal Name"
+                  name="vicePrincipalName"
+                  value={formData.vicePrincipalName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  label="Phone Number"
+                  name="vicePrincipalPhone"
+                  value={formData.vicePrincipalPhone}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  type="email"
+                  label="Email Address"
+                  name="vicePrincipalEmail"
+                  value={formData.vicePrincipalEmail}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid xs={12}>
+                <Typography variant="h6" sx={subHeaderStyle}>
+                 CEO Details
+                </Typography>
+              </Grid>
+
+              <Grid xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  label="CEO Name"
+                  name="ceoName"
+                  value={formData.ceoName}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  label="Phone Number"
+                  name="ceoPhone"
+                  value={formData.ceoPhone}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+              <Grid xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  type="email"
+                  label="Email Address"
+                  name="ceoEmail"
+                  value={formData.ceoEmail}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+
+
               {institutionType === "School" ? (
                 <>
                   <Grid xs={12} sx={{ mt: 2 }}>

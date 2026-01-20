@@ -373,7 +373,7 @@ const TRLChart = () => (
 
 export default function ResearchCom() {
   return (
-    <Box sx={{ p: 4, bgcolor: COLORS.background, minHeight: '100vh' }}>
+    <Box sx={{ p: { xs: 2, md: 4 }, bgcolor: COLORS.background, minHeight: '100vh' }}>
       {/* Header Section matching EntrepreneurHub */}
       <Stack 
         direction={{ xs: 'column', md: 'row' }} 
@@ -383,10 +383,10 @@ export default function ResearchCom() {
         spacing={2}
       >
         <Box>
-          <Typography variant="h4" fontWeight="800" color={COLORS.primaryGreen} gutterBottom>
+          <Typography variant="h4" fontWeight="800" color={COLORS.primaryGreen} gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
             Research Commercialization Hub
           </Typography>
-          <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={2} alignItems="center" sx={{ flexWrap: 'wrap' }}>
             <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', alignItems: 'center' }}>
               <CalendarMonth sx={{ fontSize: 16, mr: 0.5 }} /> Academic Year 2025-26
             </Typography>
@@ -402,7 +402,7 @@ export default function ResearchCom() {
             />
           </Stack>
         </Box>
-        <Stack direction="row" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ width: { xs: '100%', md: 'auto' } }}>
           <Button 
             variant="outlined" 
             startIcon={<Download />}
@@ -411,6 +411,7 @@ export default function ResearchCom() {
               borderColor: COLORS.primaryGreen, 
               borderRadius: '8px', 
               textTransform: 'none',
+              width: { xs: '100%', sm: 'auto' },
               '&:hover': {
                 borderColor: COLORS.primaryGreen,
                 bgcolor: `${COLORS.primaryGreen}08`
@@ -427,6 +428,7 @@ export default function ResearchCom() {
               borderRadius: '8px', 
               textTransform: 'none', 
               px: 3, 
+              width: { xs: '100%', sm: 'auto' },
               '&:hover': { bgcolor: '#0f2a24' } 
             }}
           >

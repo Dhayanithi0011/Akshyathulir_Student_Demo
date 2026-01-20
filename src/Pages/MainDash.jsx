@@ -136,18 +136,18 @@ const StatCard = ({ title, subtitle, value, change, icon, color }) => (
 const FilterBar = ({ filters, onFilterChange }) => (
   <Paper sx={{ p: 2, mb: 3, borderRadius: '10px', border: `1px solid ${COLORS.borderLight}`, boxShadow: 'none' }}>
     <Stack direction={{ xs: 'column', md: 'row' }} alignItems="center" spacing={2}>
-      <Stack direction="row" alignItems="center" spacing={1}>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ width: { xs: '100%', md: 'auto' } }}>
         <FilterList sx={{ color: COLORS.accent, fontSize: 20 }} />
         <Typography variant="subtitle2" fontWeight={700} color={COLORS.darkGreen}>FILTERS</Typography>
       </Stack>
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ flex: 1 }}>
-        <FormControl size="small" sx={{ minWidth: 160 }}>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ flex: 1, width: { xs: '100%', md: 'auto' } }}>
+        <FormControl size="small" sx={{ minWidth: 160, width: { xs: '100%', sm: 'auto' } }}>
           <InputLabel>Time Period</InputLabel>
           <Select value={filters.timePeriod} label="Time Period" onChange={(e) => onFilterChange('timePeriod', e.target.value)}>
             {FILTER_OPTIONS.timePeriod.map(opt => <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>)}
           </Select>
         </FormControl>
-        <FormControl size="small" sx={{ minWidth: 160 }}>
+        <FormControl size="small" sx={{ minWidth: 160, width: { xs: '100%', sm: 'auto' } }}>
           <InputLabel>Department</InputLabel>
           <Select value={filters.department} label="Department" onChange={(e) => onFilterChange('department', e.target.value)}>
             {FILTER_OPTIONS.department.map(opt => <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>)}
@@ -176,17 +176,17 @@ export default function MainDash() {
         <FilterBar filters={filters} onFilterChange={handleFilterChange} />
 
         {/* Top Overview Row */}
-        <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid container spacing={3} sx={{ mb: 4 }} columns={{ xs: 4, sm: 8, md: 10 }} justifyContent="center">
           {currentData.stats.map((stat, i) => (
-            <Grid item xs={12} sm={6} md={2} key={i}>
+            <Grid item xs={4} sm={4} md={2} key={i}>
                 {/* Standard Stat Card */}
-                <Card sx={{ borderRadius: '10px', border: `1px solid ${COLORS.borderLight}`, boxShadow: 'none' }}>
+                <Card sx={{ borderRadius: '10px', border: `1px solid ${COLORS.borderLight}`, boxShadow: 'none', height: '100%' }}>
                     <CardContent>
                         <Stack direction="row" spacing={2} alignItems="center">
                             <Avatar sx={{ bgcolor: `${stat.color}15`, color: stat.color }}>{stat.icon}</Avatar>
                             <Box>
                                 <Typography variant="h5" fontWeight={800}>{stat.value}</Typography>
-                                <Typography variant="caption" fontWeight={600} color="textSecondary">{stat.title}</Typography>
+                                <Typography variant="caption" fontWeight={600} color="textSecondary" sx={{ display: 'block', lineHeight: 1.2 }}>{stat.title}</Typography>
                             </Box>
                         </Stack>
                     </CardContent>

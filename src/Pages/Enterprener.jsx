@@ -419,8 +419,8 @@ export default function EntrepreneurHub() {
             />
           </Stack>
         </Box>
-        <Stack direction="row" spacing={2}>
-          <FormControl size="small" sx={{ minWidth: 120 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <FormControl size="small" sx={{ minWidth: 120, width: { xs: '100%', sm: 'auto' } }}>
             <InputLabel>Time Range</InputLabel>
             <Select
               value={timeRange}
@@ -434,10 +434,10 @@ export default function EntrepreneurHub() {
               <MenuItem value="1y">Last Year</MenuItem>
             </Select>
           </FormControl>
-          <Button variant="outlined" startIcon={<TrendingUp />} sx={{ color: COLORS.primaryGreen, borderColor: COLORS.primaryGreen, borderRadius: '8px', textTransform: 'none' }}>
+          <Button variant="outlined" startIcon={<TrendingUp />} sx={{ color: COLORS.primaryGreen, borderColor: COLORS.primaryGreen, borderRadius: '8px', textTransform: 'none', width: { xs: '100%', sm: 'auto' } }}>
             Export Reports
           </Button>
-          <Button variant="contained" startIcon={<RocketLaunch />} sx={{ bgcolor: COLORS.primaryGreen, borderRadius: '8px', textTransform: 'none', px: 3, '&:hover': { bgcolor: '#0f2a24' } }}>
+          <Button variant="contained" startIcon={<RocketLaunch />} sx={{ bgcolor: COLORS.primaryGreen, borderRadius: '8px', textTransform: 'none', px: 3, '&:hover': { bgcolor: '#0f2a24' }, width: { xs: '100%', sm: 'auto' } }}>
             Launch New Venture
           </Button>
         </Stack>
@@ -488,7 +488,7 @@ export default function EntrepreneurHub() {
         {/* Funding Trajectory with Goals */}
         <Grid item xs={12} md={8}>
           <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3,height: '90%' }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} sx={{ mb: 3 }} spacing={2}>
               <Box>
                 <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
                   Funding Trajectory vs Goals
@@ -507,7 +507,7 @@ export default function EntrepreneurHub() {
                 <Chip label={timeRange} size="small" variant="outlined" />
               </Stack>
             </Stack>
-            <SimpleChartContainer height={350}>
+            <ChartContainer height={350}>
               <AreaChart data={fundingData} key={chartKey}>
                 <defs>
                   <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
@@ -568,7 +568,7 @@ export default function EntrepreneurHub() {
                   name="Active Startups"
                 />
               </AreaChart>
-            </SimpleChartContainer>
+            </ChartContainer>
             <Stack direction="row" spacing={3} sx={{ mt: 2, flexWrap: 'wrap', gap: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box sx={{ width: 12, height: 12, bgcolor: COLORS.accentGreen, mr: 1, borderRadius: '2px' }} />
@@ -589,7 +589,7 @@ export default function EntrepreneurHub() {
         {/* Sector Distribution with Details */}
         <Grid item xs={12} md={4}>
           <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '90%' }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} sx={{ mb: 3 }} spacing={2}>
               <Box>
                 <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
                   Startup Sector Analysis
@@ -605,7 +605,7 @@ export default function EntrepreneurHub() {
               />
             </Stack>
 
-            <SimpleChartContainer height={200}>
+            <ChartContainer height={200}>
               <PieChart>
                 <Pie
                   data={sectorData}
@@ -627,7 +627,7 @@ export default function EntrepreneurHub() {
                   }}
                 />
               </PieChart>
-            </SimpleChartContainer>
+            </ChartContainer>
 
             <Stack spacing={2} sx={{ mt: 3 }}>
               {sectorData.map((item, index) => (
@@ -819,7 +819,7 @@ export default function EntrepreneurHub() {
       {/* Portfolio Overview with Enhanced Details */}
       <Card sx={{ borderRadius: '16px', mt: 10, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
         <Box sx={{ p: 3, borderBottom: '1px solid #f0f0f0', bgcolor: '#fafafa' }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={2}>
             <Box>
               <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
                 Portfolio Overview
@@ -828,7 +828,7 @@ export default function EntrepreneurHub() {
                 Top performing startups with real-time metrics
               </Typography>
             </Box>
-            <Stack direction="row" spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ width: { xs: '100%', sm: 'auto' } }}>
               <Button size="small" variant="outlined" sx={{ color: COLORS.primaryGreen, borderColor: COLORS.primaryGreen }}>
                 Filter
               </Button>

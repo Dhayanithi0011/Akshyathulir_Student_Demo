@@ -8,8 +8,9 @@ import {
   Badge, Stack, Switch, FormControlLabel, Tooltip,
   Table, TableBody, TableCell, TableContainer, TableHead,
   TableRow, Accordion, AccordionSummary, AccordionDetails,
-  Slider, InputAdornment, Menu
+  Slider, InputAdornment, Menu, useMediaQuery
 } from "@mui/material";
+import { useTheme as useMuiTheme } from "@mui/material/styles";
 import {
   DataGrid,
   GridToolbar,
@@ -101,7 +102,9 @@ const domainIcons = {
 };
 
 export default function Patent() {
-  const [rows, setRows] = React.useState(patentData);
+  const muiTheme = useMuiTheme();
+  const fullScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
+  const [rows, setRows] = React.useState(patentData || []);
   const [open, setOpen] = React.useState(false);
   const [editMode, setEditMode] = React.useState(false);
   const [editingId, setEditingId] = React.useState(null);
@@ -356,7 +359,10 @@ export default function Patent() {
       headerName: "Filed",
       width: 100,
       minWidth: 80,
-      valueFormatter: (params) => params.value ? new Date(params.value).getFullYear() : ""
+      valueFormatter: (params) => {
+        const val = params?.value ?? params;
+        return val ? new Date(val).getFullYear() : "";
+      }
     },
     {
       field: "status",
@@ -409,11 +415,13 @@ export default function Patent() {
       minWidth: 80,
       getActions: (params) => [
         <GridActionsCellItem
+          key="edit"
           icon={<EditIcon />}
           label="Edit"
           onClick={() => handleEdit(params.id)}
         />,
         <GridActionsCellItem
+          key="delete"
           icon={<DeleteIcon />}
           label="Delete"
           onClick={() => handleDelete(params.id)}
@@ -558,6 +566,9 @@ export default function Patent() {
                 value={tabValue} 
                 onChange={(e, v) => setTabValue(v)}
                 sx={{ minHeight: 40 }}
+                variant="scrollable"
+                scrollButtons="auto"
+                allowScrollButtonsMobile
               >
                 <Tab icon={<BarChartIcon />} label="Overview" sx={{ minHeight: 40 }} />
                 <Tab icon={<Timeline />} label="Trends" sx={{ minHeight: 40 }} />
@@ -1009,7 +1020,7 @@ export default function Patent() {
       </Grid>
 
       {/* Add/Edit Patent Dialog */}
-      <Dialog open={open} onClose={() => { setOpen(false); resetForm(); }} fullWidth maxWidth="md">
+      <Dialog open={open} onClose={() => { setOpen(false); resetForm(); }} fullWidth maxWidth="md" fullScreen={fullScreen}>
         <DialogTitle sx={{ bgcolor: theme.primary, color: "white" }}>
           {editMode ? "Edit Patent" : "Add New Patent"}
         </DialogTitle>

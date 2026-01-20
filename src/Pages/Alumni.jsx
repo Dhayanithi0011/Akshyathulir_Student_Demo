@@ -101,20 +101,20 @@ export default function Alumni() {
 
         {/* Three Charts in Single Row */}
         <Grid container spacing={3} mb={4}>
-          <Grid item xs={12} lg={5}>
+          <Grid item xs={12} md={8} lg={5}>
             <AnalyticsChart />
           </Grid>
-          <Grid item xs={12} lg={3}>
+          <Grid item xs={12} md={4} lg={3}>
             <FundingPieChart />
           </Grid>
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} md={12} lg={4}>
             <StartupIdeasChart />
           </Grid>
         </Grid>
 
         {/* Single Row: Three Startup Idea Cards */}
         <Grid container spacing={3} mb={4}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <IdeaCard 
               title="Smart Crop Advisory"
               domain="AgriTech"
@@ -122,7 +122,7 @@ export default function Alumni() {
               stage="Ideation"
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <IdeaCard 
               title="AI Interview Coach"
               domain="EdTech"
@@ -130,7 +130,7 @@ export default function Alumni() {
               stage="Prototype"
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <IdeaCard 
               title="Remote Health Monitor"
               domain="HealthTech"
@@ -161,11 +161,11 @@ export default function Alumni() {
 const SubHeader = memo(() => (
   <Box bgcolor="white" borderBottom={`1px solid ${COLORS.border}`} py={3}>
     <Container maxWidth="xl">
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h5" fontWeight={800} color={COLORS.primary}>Alumni Startup Network</Typography>
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="space-between" alignItems="center">
+        <Typography variant="h5" fontWeight={800} color={COLORS.primary} textAlign={{ xs: 'center', sm: 'left' }}>Alumni Startup Network</Typography>
         <Button 
           variant="contained" 
-          sx={{ bgcolor: COLORS.accent, '&:hover': { bgcolor: '#388e3c' }, textTransform: 'none', borderRadius: '8px', fontWeight: 600 }}
+          sx={{ bgcolor: COLORS.accent, '&:hover': { bgcolor: '#388e3c' }, textTransform: 'none', borderRadius: '8px', fontWeight: 600, width: { xs: '100%', sm: 'auto' } }}
         >
           New Application
         </Button>
@@ -433,41 +433,43 @@ const StartupIdeasChart = memo(() => (
 ));
 
  const PortfolioTable = memo(() => (
-  <TableContainer component={Paper} sx={{ ...CARD_SX, overflow: 'hidden' }}>
+  <Paper sx={{ ...CARD_SX, overflow: 'hidden' }}>
     <Box p={3} bgcolor="white" borderBottom={`1px solid ${COLORS.border}`}>
       <Typography variant="h6" fontWeight={800} color={COLORS.accent}>Recent Portfolio</Typography>
     </Box>
-    <Table>
-      <TableHead sx={{ bgcolor: COLORS.bg }}>
-        <TableRow>
-          <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Venture</TableCell>
-          <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Founder</TableCell>
-          <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Stage</TableCell>
-          <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Funding</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {VENTURES.map(v => (
-          <TableRow key={v.name} hover sx={{ '&:hover': { bgcolor: COLORS.bg } }}>
-            <TableCell sx={{ fontWeight: 600 }}>{v.name}</TableCell>
-            <TableCell>{v.lead}</TableCell>
-            <TableCell>
-              <Chip label={v.stage} size="small" sx={{ fontWeight: 600, bgcolor: COLORS.chipAgri, color: COLORS.accent }} />
-            </TableCell>
-            <TableCell fontWeight={700}>{v.funding}</TableCell>
+    <TableContainer>
+      <Table sx={{ minWidth: 600 }}>
+        <TableHead sx={{ bgcolor: COLORS.bg }}>
+          <TableRow>
+            <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Venture</TableCell>
+            <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Founder</TableCell>
+            <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Stage</TableCell>
+            <TableCell sx={{ fontWeight: 700, color: COLORS.textSecondary }}>Funding</TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
+        </TableHead>
+        <TableBody>
+          {VENTURES.map(v => (
+            <TableRow key={v.name} hover sx={{ '&:hover': { bgcolor: COLORS.bg } }}>
+              <TableCell sx={{ fontWeight: 600 }}>{v.name}</TableCell>
+              <TableCell>{v.lead}</TableCell>
+              <TableCell>
+                <Chip label={v.stage} size="small" sx={{ fontWeight: 600, bgcolor: COLORS.chipAgri, color: COLORS.accent }} />
+              </TableCell>
+              <TableCell fontWeight={700}>{v.funding}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Paper>
 ));
 
 const AlumniSection = memo(() => (
-  <Paper sx={{ ...CARD_SX, p: 4,mt:6 }}>
+  <Paper sx={{ ...CARD_SX, p: { xs: 2, md: 4 }, mt: 6 }}>
     <Typography variant="h6" fontWeight={800} color={COLORS.accent} mb={3}>Alumni Network</Typography>
     <Grid container spacing={3}>
       {ALUMNI_DATA.map(a => (
-        <Grid item xs={12} md={4} key={a.name}>
+        <Grid item xs={12} sm={6} md={4} key={a.name}>
           <Paper 
             elevation={0} 
             sx={{ 

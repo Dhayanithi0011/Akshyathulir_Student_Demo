@@ -275,20 +275,20 @@ export default function IndustryCollaboration() {
   const [timeFilter, setTimeFilter] = useState('6m');
 
   return (
-    <Box sx={{ p: 4, bgcolor: THEME_COLORS.bg, minHeight: '100vh' }}>
+    <Box sx={{ p: { xs: 2, md: 4 }, bgcolor: THEME_COLORS.bg, minHeight: '100vh' }}>
       
       {/* Header */}
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', md: 'center' }} spacing={2} sx={{ mb: 4 }}>
         <Box>
-          <Typography variant="h4" fontWeight="800" color={THEME_COLORS.primary} gutterBottom>
+          <Typography variant="h4" fontWeight="800" color={THEME_COLORS.primary} gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
             Industry Collaboration Hub
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Managing corporate partnerships, CSR pipelines, and industry mentorships
           </Typography>
         </Box>
-        <Stack direction="row" spacing={2}>
-          <FormControl size="small" sx={{ minWidth: 120 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ width: { xs: '100%', md: 'auto' } }}>
+          <FormControl size="small" sx={{ minWidth: 120, width: { xs: '100%', sm: 'auto' } }}>
             <InputLabel>Time Range</InputLabel>
             <Select
               value={timeFilter}
@@ -301,13 +301,14 @@ export default function IndustryCollaboration() {
               <MenuItem value="1y">Last Year</MenuItem>
             </Select>
           </FormControl>
-          <Button variant="outlined" startIcon={<FilterList />} sx={{ borderRadius: 2 }}>
+          <Button variant="outlined" startIcon={<FilterList />} sx={{ borderRadius: 2, width: { xs: '100%', sm: 'auto' } }}>
             Export Report
           </Button>
           <Button variant="contained" sx={{ 
             bgcolor: THEME_COLORS.primary, 
             borderRadius: 2,
-            '&:hover': { bgcolor: '#00382c' }
+            '&:hover': { bgcolor: '#00382c' },
+            width: { xs: '100%', sm: 'auto' }
           }}>
             + New MOU
           </Button>
@@ -315,9 +316,9 @@ export default function IndustryCollaboration() {
       </Stack>
 
       {/* Top Stats */}
-      <Grid container spacing={3} sx={{ mb: 10 }}>
+      <Grid container spacing={3} sx={{ mb: { xs: 4, md: 10 } }}>
         {collabStats.map((stat, i) => (
-          <Grid item xs={12} sm={6} md={4} lg={2} key={i} sx={{ height: "140px" }}>
+          <Grid item xs={12} sm={6} md={4} lg={2} key={i}>
             <StatCard {...stat} />
           </Grid>
         ))}
@@ -601,14 +602,14 @@ export default function IndustryCollaboration() {
               borderBottom: `1px solid ${THEME_COLORS.border}`,
               bgcolor: '#fafafa'
             }}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={2}>
                 <Box>
                   <Typography variant="h6" fontWeight="bold">Active Corporate Partnerships</Typography>
                   <Typography variant="caption" color="text.secondary">
                     24 active partnerships • ₹4.3Cr total value
                   </Typography>
                 </Box>
-                <Stack direction="row" spacing={2} alignItems="center">
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center" sx={{ width: { xs: '100%', sm: 'auto' } }}>
                   <TextField 
                     size="small" 
                     placeholder="Search Partner..." 
@@ -616,12 +617,12 @@ export default function IndustryCollaboration() {
                       startAdornment: <InputAdornment position="start"><Search sx={{ color: '#666' }} /></InputAdornment>,
                       sx: { borderRadius: 2 }
                     }}
-                    sx={{ width: 250 }}
+                    sx={{ width: { xs: '100%', sm: 250 } }}
                   />
                   <Button 
                     variant="outlined" 
                     size="small"
-                    sx={{ borderRadius: 2 }}
+                    sx={{ borderRadius: 2, width: { xs: '100%', sm: 'auto' } }}
                   >
                     Filter
                   </Button>
@@ -636,6 +637,7 @@ export default function IndustryCollaboration() {
                     field: 'partner', 
                     headerName: 'Industry Partner', 
                     flex: 1.2, 
+                    minWidth: 200,
                     renderCell: (p) => (
                       <Stack direction="row" spacing={1.5} alignItems="center">
                         <Avatar sx={{ 
@@ -657,6 +659,7 @@ export default function IndustryCollaboration() {
                     field: 'type', 
                     headerName: 'Collaboration Type', 
                     flex: 1.2,
+                    minWidth: 180,
                     renderCell: (p) => (
                       <Chip 
                         label={p.value} 
@@ -673,6 +676,7 @@ export default function IndustryCollaboration() {
                     field: 'value', 
                     headerName: 'Deal Value', 
                     flex: 1,
+                    minWidth: 120,
                     renderCell: (p) => (
                       <Typography variant="body2" fontWeight="600">
                         {p.value}
@@ -683,6 +687,7 @@ export default function IndustryCollaboration() {
                     field: 'utilization', 
                     headerName: 'Resource Utilization', 
                     flex: 1.5, 
+                    minWidth: 200,
                     renderCell: (p) => (
                       <Box sx={{ width: '100%' }}>
                         <Stack direction="row" justifyContent="space-between" sx={{ mb: 0.5 }}>
@@ -712,6 +717,7 @@ export default function IndustryCollaboration() {
                     field: 'status', 
                     headerName: 'Status', 
                     flex: 0.8, 
+                    minWidth: 120,
                     renderCell: (p) => (
                       <Chip 
                         label={p.value} 
