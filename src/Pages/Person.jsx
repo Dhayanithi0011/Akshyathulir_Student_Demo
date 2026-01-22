@@ -47,14 +47,14 @@ const institutionData = {
 };
 
 const sectionHeaderStyle = {
-  backgroundColor: "#046f0bff",
+  backgroundColor: "#1a3e36",
   color: "#fff",
   padding: "12px 24px",
   borderRadius: "4px 4px 0 0",
 };
 
 const cardStyle = {
-  border: "2px solid #046f0bff",
+  border: "2px solid #1a3e36",
   boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
   marginBottom: "40px",
   overflow: "hidden"
@@ -199,7 +199,7 @@ export default function Person() {
   };
 
   const subHeaderStyle = {
-    color: "#046f0bff",
+    color: "#1a3e36",
     fontWeight: "bold",
   };
 
@@ -250,7 +250,7 @@ export default function Person() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
-      <Typography variant="h3" align="center" sx={{ color: "#046f0bff", fontWeight: 700, mb: 6 }}>
+      <Typography variant="h3" align="center" sx={{ color: "#1a3e36", fontWeight: 700, mb: 6 }}>
         Educational Institution Registration
       </Typography>
 
@@ -323,20 +323,20 @@ export default function Person() {
               {institutionType && (
                 <Grid xs={12}>
                   <Divider sx={{ my: 2 }} />
-                  <Typography variant="subtitle1" sx={{ color: "#046f0bff", fontWeight: 600, mb: 2 }}>
+                  <Typography variant="subtitle1" sx={{ color: "#1a3e36", fontWeight: 600, mb: 2 }}>
                     {institutionType === "School" ? "Departments Offered" : "Degrees Offered"}
                   </Typography>
                   <Grid container spacing={1}>
                     {institutionType === "School" ? (
                       institutionData.School.departments.map(dept => (
                         <Grid xs={6} md={3} key={dept}>
-                          <FormControlLabel control={<Checkbox color="success" onChange={() => handleDeptToggle(dept)} />} label={dept} />
+                          <FormControlLabel control={<Checkbox sx={{ color: "#1a3e36", '&.Mui-checked': { color: "#1a3e36" } }} onChange={() => handleDeptToggle(dept)} />} label={dept} />
                         </Grid>
                       ))
                     ) : (
                       Object.keys(institutionData[institutionType].degrees).map(deg => (
                         <Grid xs={6} md={3} key={deg}>
-                          <FormControlLabel control={<Checkbox color="success" checked={selectedDegrees.includes(deg)} onChange={() => handleDegreeToggle(deg)} />} label={deg} />
+                          <FormControlLabel control={<Checkbox sx={{ color: "#1a3e36", '&.Mui-checked': { color: "#1a3e36" } }} checked={selectedDegrees.includes(deg)} onChange={() => handleDegreeToggle(deg)} />} label={deg} />
                         </Grid>
                       ))
                     )}
@@ -346,7 +346,7 @@ export default function Person() {
 
               {selectedDegrees.length > 0 && (
                 <Grid xs={12}>
-                  <Typography variant="subtitle1" sx={{ color: "#046f0bff", fontWeight: 600, mb: 2 }}>
+                  <Typography variant="subtitle1" sx={{ color: "#1a3e36", fontWeight: 600, mb: 2 }}>
                     Departments Under Selected Degrees
                   </Typography>
                   <Grid container spacing={1}>
@@ -354,7 +354,7 @@ export default function Person() {
                       institutionData[institutionType].degrees[deg].map(dept => (
                         <Grid xs={12} md={6} key={deg + dept}>
                           <FormControlLabel
-                            control={<Checkbox color="success" onChange={() => handleDeptToggle(`${dept} (${deg})`)} />}
+                            control={<Checkbox sx={{ color: "#1a3e36", '&.Mui-checked': { color: "#1a3e36" } }} onChange={() => handleDeptToggle(`${dept} (${deg})`)} />}
                             label={`${dept} (${deg})`}
                           />
                         </Grid>
@@ -397,9 +397,9 @@ export default function Person() {
                 <FormControl component="fieldset">
                   <FormLabel component="legend">Gender *</FormLabel>
                   <RadioGroup row name="gender" value={formData.gender} onChange={handleInputChange}>
-                    <FormControlLabel value="male" control={<Radio color="success" />} label="Male" />
-                    <FormControlLabel value="female" control={<Radio color="success" />} label="Female" />
-                    <FormControlLabel value="others" control={<Radio color="success" />} label="Others" />
+                    <FormControlLabel value="male" control={<Radio sx={{ color: "#1a3e36", '&.Mui-checked': { color: "#1a3e36" } }} />} label="Male" />
+                    <FormControlLabel value="female" control={<Radio sx={{ color: "#1a3e36", '&.Mui-checked': { color: "#1a3e36" } }} />} label="Female" />
+                    <FormControlLabel value="others" control={<Radio sx={{ color: "#1a3e36", '&.Mui-checked': { color: "#1a3e36" } }} />} label="Others" />
                   </RadioGroup>
                 </FormControl>
               </Grid>
@@ -733,12 +733,12 @@ export default function Person() {
                       onClick={() => isUploaded && handleViewFile(doc)}
                       sx={{
                         py: 1.5,
-                        backgroundColor: isUploaded ? "#046f0bff" : "transparent",
-                        borderColor: "#046f0bff",
-                        color: isUploaded ? "#fff" : "#046f0bff",
+                        backgroundColor: isUploaded ? "#1a3e36" : "transparent",
+                        borderColor: "#1a3e36",
+                        color: isUploaded ? "#fff" : "#1a3e36",
                         "&:hover": {
-                          backgroundColor: isUploaded ? "#035a09" : "rgba(4, 111, 11, 0.04)",
-                          borderColor: "#035a09",
+                          backgroundColor: isUploaded ? "#122b26" : "rgba(26, 62, 54, 0.04)",
+                          borderColor: "#122b26",
                         },
                       }}
                     >
@@ -840,7 +840,7 @@ export default function Person() {
         </Paper>
 
         <Box sx={{ display: 'flex', gap: 2, mb: 10 }}>
-          <Button type="submit" variant="contained" size="large" sx={{ backgroundColor: "#046f0bff", "&:hover": { backgroundColor: "#035a09" }, px: 4 }}>
+          <Button type="submit" variant="contained" size="large" sx={{ backgroundColor: "#1a3e36", "&:hover": { backgroundColor: "#122b26" }, px: 4 }}>
             Submit Application
           </Button>
           <Button variant="outlined" color="error" size="large" onClick={handleReset}>

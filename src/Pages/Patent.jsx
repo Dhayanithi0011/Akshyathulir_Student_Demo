@@ -85,7 +85,7 @@ const theme = {
   info: "#2196F3",
   background: "#f5f5f5",
   cardBg: "#ffffff",
-  textPrimary: "#333333",
+  textPrimary: "#1a3e36",
   textSecondary: "#666666"
 };
 
@@ -481,55 +481,55 @@ export default function Patent() {
             title: "Total Patents",
             value: rows.length,
             change: "+2 this month",
-            icon: <AssignmentTurnedIn sx={{ color: theme.primary }} />,
-            color: theme.primary,
+            icon: <AssignmentTurnedIn sx={{ color: theme.textPrimary }} />,
+            color: theme.textPrimary,
             trend: "up"
           },
           {
             title: "Granted",
             value: statusCount.Granted,
             change: `${conversionRate}% conversion`,
-            icon: <Verified sx={{ color: theme.success }} />,
-            color: theme.success,
+            icon: <Verified sx={{ color: theme.textPrimary }} />,
+            color: theme.textPrimary,
             trend: "up"
           },
           {
             title: "Total Revenue",
             value: `₹${totalRevenue.toLocaleString()}`,
             change: `Avg: ₹${avgRevenue.toLocaleString()}`,
-            icon: <MonetizationOn sx={{ color: "#FF9800" }} />,
-            color: "#FF9800",
+            icon: <MonetizationOn sx={{ color: theme.textPrimary }} />,
+            color: theme.textPrimary,
             trend: "up"
           },
           {
             title: "Commercialized",
             value: commercialized.length,
             change: `${Math.round((commercialized.length / rows.length) * 100)}% rate`,
-            icon: <TrendingUp sx={{ color: theme.secondary }} />,
-            color: theme.secondary,
+            icon: <TrendingUp sx={{ color: theme.textPrimary }} />,
+            color: theme.textPrimary,
             trend: "up"
           },
           {
             title: "Starred",
             value: starredCount,
             change: `${Math.round((starredCount / rows.length) * 100)}%`,
-            icon: <Star sx={{ color: "#FF9800" }} />,
-            color: "#FF9800",
+            icon: <Star sx={{ color: theme.textPrimary }} />,
+            color: theme.textPrimary,
             trend: "flat"
           },
           {
             title: "Pending",
             value: statusCount.Pending,
             change: `${Math.round((statusCount.Pending / rows.length) * 100)}%`,
-            icon: <Schedule sx={{ color: theme.warning }} />,
-            color: theme.warning,
+            icon: <Schedule sx={{ color: theme.textPrimary }} />,
+            color: theme.textPrimary,
             trend: "down"
           }
         ].map((kpi, i) => (
           <Grid item xs={12} sm={6} md={4} lg={2} key={i}>
             <Card sx={{ 
               bgcolor: theme.cardBg, 
-              borderLeft: `4px solid ${kpi.color}`,
+              border: `1px solid muted`,
               boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
               height: "100%"
             }}>

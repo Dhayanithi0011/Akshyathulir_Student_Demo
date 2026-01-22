@@ -43,11 +43,11 @@ const FILTER_OPTIONS = {
 const dataByFilter = {
   monthly: {
     stats: [
-      { title: "Active Startups", value: "42", change: "+12%", icon: <RocketLaunch />, color: "#2E8B57" },
-      { title: "IP / Patents", value: "18", change: "+8%", icon: <Gavel />, color: "#4682B4" },
-      { title: "Industry Partners", value: "24", change: "+15%", icon: <Handshake />, color: "#FF8C00" },
-      { title: "Research Projects", value: "128", change: "+22%", icon: <Science />, color: "#9C27B0" },
-      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#b08727" }
+      { title: "Active Startups", value: "42", change: "+12%", icon: <RocketLaunch />, color: "#1a3e36" },
+      { title: "IP / Patents", value: "18", change: "+8%", icon: <Gavel />, color: "#1a3e36" },
+      { title: "Industry Partners", value: "24", change: "+15%", icon: <Handshake />, color: "#1a3e36" },
+      { title: "Research Projects", value: "128", change: "+22%", icon: <Science />, color: "#1a3e36" },
+      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#1a3e36" }
     ],
     // DATA FROM YOUR IMAGE (Adjusted for monthly)
     kpiStats: [
@@ -63,11 +63,11 @@ const dataByFilter = {
   },
   quarterly: {
     stats: [
-      { title: "Active Startups", value: "58", change: "+25%", icon: <RocketLaunch />, color: "#2E8B57" },
-      { title: "IP / Patents", value: "24", change: "+33%", icon: <Gavel />, color: "#4682B4" },
-      { title: "Industry Partners", value: "32", change: "+20%", icon: <Handshake />, color: "#FF8C00" },
-      { title: "Research Projects", value: "156", change: "+18%", icon: <Science />, color: "#9C27B0" },
-      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#b08727" }
+      { title: "Active Startups", value: "58", change: "+25%", icon: <RocketLaunch />, color: "#1a3e36" },
+      { title: "IP / Patents", value: "24", change: "+33%", icon: <Gavel />, color: "#1a3e36" },
+      { title: "Industry Partners", value: "32", change: "+20%", icon: <Handshake />, color: "#1a3e36" },
+      { title: "Research Projects", value: "156", change: "+18%", icon: <Science />, color: "#1a3e36" },
+      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#1a3e36" }
     ],
     // DATA EXACTLY AS PER YOUR IMAGE
     kpiStats: [
@@ -83,11 +83,11 @@ const dataByFilter = {
   },
   yearly: {
     stats: [
-      { title: "Active Startups", value: "142", change: "+45%", icon: <RocketLaunch />, color: "#2E8B57" },
-      { title: "IP / Patents", value: "84", change: "+52%", icon: <Gavel />, color: "#4682B4" },
-      { title: "Industry Partners", value: "76", change: "+30%", icon: <Handshake />, color: "#FF8C00" },
-      { title: "Research Projects", value: "412", change: "+25%", icon: <Science />, color: "#9C27B0" },
-      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#b08727" }
+      { title: "Active Startups", value: "142", change: "+45%", icon: <RocketLaunch />, color: "#1a3e36" },
+      { title: "IP / Patents", value: "84", change: "+52%", icon: <Gavel />, color: "#1a3e36" },
+      { title: "Industry Partners", value: "76", change: "+30%", icon: <Handshake />, color: "#1a3e36" },
+      { title: "Research Projects", value: "412", change: "+25%", icon: <Science />, color: "#1a3e36" },
+      { title: "Students Placed", value: "552", change: "+5%", icon: <Science />, color: "#1a3e36" }
     ],
     kpiStats: [
       { title: "Industry Collaborations", subtitle: "Active partnerships", value: "156", change: "+35%", icon: <BusinessCenter />, color: "#15573F" },
@@ -118,7 +118,7 @@ const StatCard = ({ title, subtitle, value, change, icon, color }) => (
           {React.cloneElement(icon, { sx: { fontSize: 24 } })}
         </Avatar>
         <Box sx={{ flex: 1 }}>
-          <Typography variant="h4" fontWeight={800} sx={{ color: '#0C3B2E', lineHeight: 1 }}>{value}</Typography>
+          <Typography variant="h4" fontWeight={800} sx={{ color: '#1a3e36', lineHeight: 1 }}>{value}</Typography>
           <Typography variant="subtitle2" fontWeight={700} sx={{ mt: 0.5, color: '#0C3B2E' }}>{title}</Typography>
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 0.5 }}>
             <Typography variant="caption" sx={{ color: '#666', fontWeight: 500 }}>{subtitle}</Typography>
@@ -185,7 +185,7 @@ export default function MainDash() {
                         <Stack direction="row" spacing={2} alignItems="center">
                             <Avatar sx={{ bgcolor: `${stat.color}15`, color: stat.color }}>{stat.icon}</Avatar>
                             <Box>
-                                <Typography variant="h5" fontWeight={800}>{stat.value}</Typography>
+                                <Typography variant="h5" fontWeight={800} sx={{ color: '#1a3e36' }}>{stat.value}</Typography>
                                 <Typography variant="caption" fontWeight={600} color="textSecondary" sx={{ display: 'block', lineHeight: 1.2 }}>{stat.title}</Typography>
                             </Box>
                         </Stack>
