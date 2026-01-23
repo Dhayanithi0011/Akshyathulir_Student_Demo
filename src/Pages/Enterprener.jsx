@@ -65,7 +65,7 @@ import {
   Legend
 } from 'recharts';
 
-const COLORS = {
+const EduColors = {
   primaryGreen: '#1a3e36',
   background: '#f4f7f6',
   cardWhite: '#ffffff',
@@ -78,8 +78,7 @@ const COLORS = {
   success: '#4caf50'
 };
 
-// --- Enhanced Mock Data ---
-const fundingData = [
+const EduFundingData = [
   { month: 'Jan', amount: 400000, goal: 350000, startups: 5 },
   { month: 'Feb', amount: 800000, goal: 600000, startups: 8 },
   { month: 'Mar', amount: 600000, goal: 750000, startups: 6 },
@@ -88,38 +87,38 @@ const fundingData = [
   { month: 'Jun', amount: 2400000, goal: 2000000, startups: 15 },
 ];
 
-const sectorData = [
+const EduSectorData = [
   { name: 'EdTech', value: 40, startups: 18, funding: '₹1.2Cr' },
   { name: 'FinTech', value: 25, startups: 11, funding: '₹85L' },
   { name: 'SaaS', value: 20, startups: 9, funding: '₹65L' },
   { name: 'E-commerce', value: 15, startups: 7, funding: '₹45L' },
 ];
 
-const stageData = [
+const EduStageData = [
   { stage: 'Ideation', count: 24, avgFunding: '₹50K', successRate: '15%' },
   { stage: 'Prototype', count: 14, avgFunding: '₹2L', successRate: '35%' },
   { stage: 'MVP', count: 8, avgFunding: '₹5L', successRate: '60%' },
   { stage: 'Scaling', count: 6, avgFunding: '₹15L', successRate: '85%' },
 ];
 
-const monthlyMetrics = [
+const EduMonthlyMetrics = [
   { metric: 'New Applications', value: 28, change: '+12%', icon: <Groups /> },
   { metric: 'Investor Meetings', value: 45, change: '+8%', icon: <Handshake /> },
   { metric: 'Demo Days', value: 3, change: '0%', icon: <EmojiEvents /> },
   { metric: 'Alumni Engagement', value: 18, change: '+5%', icon: <School /> },
 ];
 
-const topInvestors = [
+const EduTopInvestors = [
   { name: 'Sequoia Capital', investments: 8, total: '₹1.2Cr', focus: 'Tech' },
   { name: 'Accel Partners', investments: 6, total: '₹85L', focus: 'SaaS' },
   { name: 'Blume Ventures', investments: 5, total: '₹65L', focus: 'FinTech' },
   { name: 'AngelList India', investments: 12, total: '₹95L', focus: 'Mixed' },
 ];
 
-const rows = [
+const EduRows = [
   {
     id: 1,
-    name: 'EcoDrive AI',  // Added 'name' field for the renderCell
+    name: 'EcoDrive AI',
     startup: 'EcoDrive AI',
     founder: 'Arjun V.',
     sector: 'CleanTech',
@@ -169,18 +168,18 @@ const rows = [
   },
 ];
 
-const columns = [
+const EduColumns = [
   {
     field: 'startup',
     headerName: 'Startup Name',
     flex: 1.2,
     renderCell: (params) => (
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Avatar sx={{ width: 32, height: 32, bgcolor: COLORS.primaryGreen + '20', color: COLORS.primaryGreen }}>
+        <Avatar sx={{ width: 32, height: 32, bgcolor: EduColors.primaryGreen + '20', color: EduColors.primaryGreen }}>
           {params.row.startup ? params.row.startup[0] : '?'}
         </Avatar>
         <Box>
-          <Typography variant="body2" fontWeight="600" color={COLORS.primaryGreen}>
+          <Typography variant="body2" fontWeight="600" color={EduColors.primaryGreen}>
             {params.value}
           </Typography>
           <Typography variant="caption" color="textSecondary">
@@ -199,8 +198,8 @@ const columns = [
         label={params.value}
         size="small"
         sx={{
-          bgcolor: `${COLORS.primaryGreen}10`,
-          color: COLORS.primaryGreen,
+          bgcolor: `${EduColors.primaryGreen}10`,
+          color: EduColors.primaryGreen,
           fontWeight: 'bold'
         }}
       />
@@ -218,9 +217,9 @@ const columns = [
           bgcolor: params.value === 'Scaling' ? '#e8f5e9' :
             params.value === 'MVP' ? '#e3f2fd' :
               params.value === 'Prototype' ? '#fff3e0' : '#f5f5f5',
-          color: params.value === 'Scaling' ? COLORS.chartGreen :
-            params.value === 'MVP' ? COLORS.info :
-              params.value === 'Prototype' ? COLORS.warning : COLORS.textGrey,
+          color: params.value === 'Scaling' ? EduColors.chartGreen :
+            params.value === 'MVP' ? EduColors.info :
+              params.value === 'Prototype' ? EduColors.warning : EduColors.textGrey,
           fontWeight: 'bold',
           borderRadius: '6px'
         }}
@@ -232,7 +231,7 @@ const columns = [
     headerName: 'Funding',
     flex: 0.8,
     renderCell: (params) => (
-      <Typography variant="body2" fontWeight="700" color={COLORS.primaryGreen}>
+      <Typography variant="body2" fontWeight="700" color={EduColors.primaryGreen}>
         {params.value}
       </Typography>
     )
@@ -244,11 +243,11 @@ const columns = [
     renderCell: (params) => (
       <Stack direction="row" alignItems="center" spacing={0.5}>
         {params.value > 0 ? (
-          <ArrowUpward sx={{ fontSize: 16, color: COLORS.accentGreen }} />
+          <ArrowUpward sx={{ fontSize: 16, color: EduColors.accentGreen }} />
         ) : (
           <ArrowDownward sx={{ fontSize: 16, color: '#f44336' }} />
         )}
-        <Typography variant="body2" color={params.value > 0 ? COLORS.accentGreen : '#f44336'}>
+        <Typography variant="body2" color={params.value > 0 ? EduColors.accentGreen : '#f44336'}>
           {params.value}%
         </Typography>
       </Stack>
@@ -256,12 +255,11 @@ const columns = [
   },
 ];
 
-
-const StatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
-  <Card sx={{ height: '100%', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #edf2f0' }}>
+const EduStatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
+  <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid #edf2f0' }}>
     <CardContent sx={{ p: 3 }}>
       <Stack direction="row" justifyContent="space-between">
-        <Avatar sx={{ bgcolor: `${COLORS.primaryGreen}10`, color: COLORS.primaryGreen }}>
+        <Avatar sx={{ bgcolor: `${EduColors.primaryGreen}10`, color: EduColors.primaryGreen }}>
           {icon}
         </Avatar>
         <MuiTooltip title={tooltip || "More details"}>
@@ -269,14 +267,14 @@ const StatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
         </MuiTooltip>
       </Stack>
       <Box sx={{ mt: 2 }}>
-        <Typography variant="h4" fontWeight="800" color={COLORS.primaryGreen}>{value}</Typography>
+        <Typography variant="h4" fontWeight="800" color={EduColors.primaryGreen}>{value}</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 0.5 }}>
           <Typography variant="caption" sx={{
             bgcolor: trend === 'negative' ? '#ffebee' : '#e8f5e9',
             px: 1,
             py: 0.2,
             borderRadius: '4px',
-            color: trend === 'negative' ? '#f44336' : COLORS.accentGreen,
+            color: trend === 'negative' ? '#f44336' : EduColors.accentGreen,
             fontWeight: 'bold'
           }}>
             {subValue}
@@ -284,13 +282,13 @@ const StatCard = ({ title, value, icon, subValue, trend, tooltip }) => (
           <Typography variant="caption" color="textSecondary">vs last month</Typography>
         </Stack>
       </Box>
-      <Typography variant="body2" sx={{ mt: 2, color: COLORS.textGrey, fontSize: '0.75rem', fontWeight: 600 }}>{title}</Typography>
+      <Typography variant="body2" sx={{ mt: 2, color: EduColors.textGrey, fontSize: '0.75rem', fontWeight: 600 }}>{title}</Typography>
     </CardContent>
   </Card>
 );
 
-const MetricCard = ({ title, value, change, icon, color }) => (
-  <Paper sx={{ height: '100%', p: 2.5, borderRadius: '12px', border: `1px solid ${COLORS.border}` }}>
+const EduMetricCard = ({ title, value, change, icon, color }) => (
+  <Paper sx={{ p: 2.5, borderRadius: '12px', border: `1px solid ${EduColors.border}` }}>
     <Stack direction="row" alignItems="center" spacing={2}>
       <Avatar sx={{ bgcolor: color + '15', color: color, width: 40, height: 40 }}>
         {icon}
@@ -300,11 +298,11 @@ const MetricCard = ({ title, value, change, icon, color }) => (
           {title}
         </Typography>
         <Stack direction="row" alignItems="baseline" spacing={1}>
-          <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
+          <Typography variant="h6" fontWeight="700" color={EduColors.primaryGreen}>
             {value}
           </Typography>
           <Typography variant="caption" sx={{
-            color: change.includes('+') ? COLORS.accentGreen : change.includes('-') ? '#f44336' : COLORS.textGrey,
+            color: change.includes('+') ? EduColors.accentGreen : change.includes('-') ? '#f44336' : EduColors.textGrey,
             fontWeight: 'bold'
           }}>
             {change}
@@ -315,50 +313,27 @@ const MetricCard = ({ title, value, change, icon, color }) => (
   </Paper>
 );
 
-// Enhanced Chart Container with guaranteed dimensions
-const ChartContainer = ({ children, height = 300, minHeight = 200 }) => {
-  const containerRef = useRef(null);
-  const [dimensions, setDimensions] = useState({ width: 400, height });
-
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        const { width, height } = containerRef.current.getBoundingClientRect();
-        if (width > 0 && height > 0) {
-          setDimensions({ width, height });
-        }
-      }
-    };
-
-    updateDimensions();
-    const resizeObserver = new ResizeObserver(updateDimensions);
-
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
+const EduChartContainer = ({ children, height = 300, minHeight = 200 }) => {
+  const eduContainerRef = useRef(null);
 
   return (
     <Box
-      ref={containerRef}
+      ref={eduContainerRef}
       sx={{
         height: height,
         minHeight: minHeight,
         width: '100%',
+        minWidth: 0,
         position: 'relative'
       }}
     >
       <Box sx={{
         width: '100%',
         height: '100%',
-        minWidth: '100%',
+        minWidth: 0,
         minHeight: minHeight
       }}>
-        <ResponsiveContainer width="100%" height="100%" debounce={1}>
+        <ResponsiveContainer width="100%" height="100%" debounce={50}>
           {children}
         </ResponsiveContainer>
       </Box>
@@ -366,42 +341,39 @@ const ChartContainer = ({ children, height = 300, minHeight = 200 }) => {
   );
 };
 
-// Fallback chart component
-const SimpleChartContainer = ({ children, height = 300 }) => (
-  <Box sx={{ height: height, width: '100%', position: 'relative' }}>
-    <ResponsiveContainer width="100%" height="100%">
+const EduSimpleChartContainer = ({ children, height = 300 }) => (
+  <Box sx={{ height: height, width: '100%', minWidth: 0, position: 'relative' }}>
+    <ResponsiveContainer width="100%" height="100%" debounce={50}>
       {children}
     </ResponsiveContainer>
   </Box>
 );
 
 export default function EntrepreneurHub() {
-  const [timeRange, setTimeRange] = useState('6m');
-  const [chartKey, setChartKey] = useState(0); // Key to force re-render
+  const [eduTimeRange, setEduTimeRange] = useState('6m');
+  const [eduChartKey, setEduChartKey] = useState(0);
 
   useEffect(() => {
-    // Force chart re-render after mount to fix dimension issues
-    const timer = setTimeout(() => {
-      setChartKey(prev => prev + 1);
+    const eduTimer = setTimeout(() => {
+      setEduChartKey(prev => prev + 1);
     }, 100);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(eduTimer);
   }, []);
 
   return (
     <Box sx={{
       flexGrow: 1,
       p: { xs: 2, sm: 3, md: 4 },
-      bgcolor: COLORS.background,
+      bgcolor: EduColors.background,
       minHeight: '100vh',
       overflowX: 'hidden'
     }}>
 
-      {/* Header Area */}
       <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', md: 'center' }} sx={{ mb: 4 }} spacing={2}>
         <Box>
-          <Typography variant="h4" fontWeight="800" color={COLORS.primaryGreen} gutterBottom>
-            Innovation Dashboard
+          <Typography variant="h4" fontWeight="800" color={EduColors.primaryGreen} gutterBottom>
+            Student Entrepreneurship
           </Typography>
           <Stack direction="row" spacing={2} alignItems="center">
             <Typography variant="body2" color="textSecondary" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -414,18 +386,18 @@ export default function EntrepreneurHub() {
               sx={{
                 bgcolor: '#fff',
                 fontWeight: 'bold',
-                border: `1px solid ${COLORS.primaryGreen}20`
+                border: `1px solid ${EduColors.primaryGreen}20`
               }}
             />
           </Stack>
         </Box>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ width: { xs: '100%', md: 'auto' } }}>
-          <FormControl size="small" sx={{ minWidth: 120, width: { xs: '100%', sm: 'auto' } }}>
+        <Stack direction="row" spacing={2}>
+          <FormControl size="small" sx={{ minWidth: 120 }}>
             <InputLabel>Time Range</InputLabel>
             <Select
-              value={timeRange}
+              value={eduTimeRange}
               label="Time Range"
-              onChange={(e) => setTimeRange(e.target.value)}
+              onChange={(e) => setEduTimeRange(e.target.value)}
               sx={{ borderRadius: '8px' }}
             >
               <MenuItem value="1m">Last Month</MenuItem>
@@ -434,19 +406,18 @@ export default function EntrepreneurHub() {
               <MenuItem value="1y">Last Year</MenuItem>
             </Select>
           </FormControl>
-          <Button variant="outlined" startIcon={<TrendingUp />} sx={{ color: COLORS.primaryGreen, borderColor: COLORS.primaryGreen, borderRadius: '8px', textTransform: 'none', width: { xs: '100%', sm: 'auto' } }}>
+          <Button variant="outlined" startIcon={<TrendingUp />} sx={{ color: EduColors.primaryGreen, borderColor: EduColors.primaryGreen, borderRadius: '8px', textTransform: 'none' }}>
             Export Reports
           </Button>
-          <Button variant="contained" startIcon={<RocketLaunch />} sx={{ bgcolor: COLORS.primaryGreen, borderRadius: '8px', textTransform: 'none', px: 3, '&:hover': { bgcolor: '#0f2a24' }, width: { xs: '100%', sm: 'auto' } }}>
+          <Button variant="contained" startIcon={<RocketLaunch />} sx={{ bgcolor: EduColors.primaryGreen, borderRadius: '8px', textTransform: 'none', px: 3, '&:hover': { bgcolor: '#0f2a24' } }}>
             Launch New Venture
           </Button>
         </Stack>
       </Stack>
 
-      {/* Key Performance Metrics */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+          <EduStatCard
             title="Active Incubates"
             value="42"
             icon={<RocketLaunch fontSize="small" />}
@@ -455,7 +426,7 @@ export default function EntrepreneurHub() {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+          <EduStatCard
             title="Committed Funding"
             value="₹2.4Cr"
             icon={<MonetizationOn fontSize="small" />}
@@ -464,7 +435,7 @@ export default function EntrepreneurHub() {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+          <EduStatCard
             title="Student Founders"
             value="128"
             icon={<Groups fontSize="small" />}
@@ -473,7 +444,7 @@ export default function EntrepreneurHub() {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+          <EduStatCard
             title="Success Rate"
             value="68%"
             icon={<Stars fontSize="small" />}
@@ -483,14 +454,26 @@ export default function EntrepreneurHub() {
         </Grid>
       </Grid>
 
-      {/* Main Charts Section */}
+      <Grid container spacing={2} sx={{ mb: 4 }}>
+        {EduMonthlyMetrics.map((metric, index) => (
+          <Grid item xs={6} sm={3} key={index}>
+            <EduMetricCard
+              title={metric.metric}
+              value={metric.value}
+              change={metric.change}
+              icon={metric.icon}
+              color={EduColors.primaryGreen}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        {/* Funding Trajectory with Goals */}
         <Grid item xs={12} md={8}>
-          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3,height: '90%' }}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} sx={{ mb: 3 }} spacing={2}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '92%' }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
               <Box>
-                <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
+                <Typography variant="h6" fontWeight="700" color={EduColors.primaryGreen}>
                   Funding Trajectory vs Goals
                 </Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -502,21 +485,21 @@ export default function EntrepreneurHub() {
                   icon={<TrendingUp sx={{ fontSize: 14 }} />}
                   label="₹24L Avg/Month"
                   size="small"
-                  sx={{ bgcolor: COLORS.primaryGreen, color: '#fff' }}
+                  sx={{ bgcolor: EduColors.primaryGreen, color: '#fff' }}
                 />
-                <Chip label={timeRange} size="small" variant="outlined" />
+                <Chip label={eduTimeRange} size="small" variant="outlined" />
               </Stack>
             </Stack>
-            <ChartContainer height={350}>
-              <AreaChart data={fundingData} key={chartKey}>
+            <EduSimpleChartContainer height={350}>
+              <AreaChart data={EduFundingData} key={eduChartKey}>
                 <defs>
                   <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={COLORS.accentGreen} stopOpacity={0.3} />
-                    <stop offset="95%" stopColor={COLORS.accentGreen} stopOpacity={0} />
+                    <stop offset="5%" stopColor={EduColors.accentGreen} stopOpacity={0.3} />
+                    <stop offset="95%" stopColor={EduColors.accentGreen} stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorGoal" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={COLORS.warning} stopOpacity={0.1} />
-                    <stop offset="95%" stopColor={COLORS.warning} stopOpacity={0} />
+                    <stop offset="5%" stopColor={EduColors.warning} stopOpacity={0.1} />
+                    <stop offset="95%" stopColor={EduColors.warning} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
@@ -524,12 +507,12 @@ export default function EntrepreneurHub() {
                   dataKey="month"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: COLORS.textGrey, fontSize: 12 }}
+                  tick={{ fill: EduColors.textGrey, fontSize: 12 }}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: COLORS.textGrey, fontSize: 12 }}
+                  tick={{ fill: EduColors.textGrey, fontSize: 12 }}
                   tickFormatter={(value) => `₹${value / 100000}L`}
                 />
                 <Tooltip
@@ -543,7 +526,7 @@ export default function EntrepreneurHub() {
                 <Area
                   type="monotone"
                   dataKey="goal"
-                  stroke={COLORS.warning}
+                  stroke={EduColors.warning}
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   fillOpacity={0.1}
@@ -553,7 +536,7 @@ export default function EntrepreneurHub() {
                 <Area
                   type="monotone"
                   dataKey="amount"
-                  stroke={COLORS.accentGreen}
+                  stroke={EduColors.accentGreen}
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorAmount)"
@@ -562,36 +545,35 @@ export default function EntrepreneurHub() {
                 <Line
                   type="monotone"
                   dataKey="startups"
-                  stroke={COLORS.info}
+                  stroke={EduColors.info}
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   name="Active Startups"
                 />
               </AreaChart>
-            </ChartContainer>
+            </EduSimpleChartContainer>
             <Stack direction="row" spacing={3} sx={{ mt: 2, flexWrap: 'wrap', gap: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: 12, height: 12, bgcolor: COLORS.accentGreen, mr: 1, borderRadius: '2px' }} />
+                <Box sx={{ width: 12, height: 12, bgcolor: EduColors.accentGreen, mr: 1, borderRadius: '2px' }} />
                 <Typography variant="caption" color="textSecondary">Actual Funding</Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: 12, height: 12, bgcolor: COLORS.warning, mr: 1, borderRadius: '2px', border: '1px dashed' }} />
+                <Box sx={{ width: 12, height: 12, bgcolor: EduColors.warning, mr: 1, borderRadius: '2px', border: '1px dashed' }} />
                 <Typography variant="caption" color="textSecondary">Monthly Target</Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: 12, height: 12, bgcolor: COLORS.info, mr: 1, borderRadius: '2px' }} />
+                <Box sx={{ width: 12, height: 12, bgcolor: EduColors.info, mr: 1, borderRadius: '2px' }} />
                 <Typography variant="caption" color="textSecondary">Startup Count</Typography>
               </Box>
             </Stack>
           </Card>
         </Grid>
 
-        {/* Sector Distribution with Details */}
         <Grid item xs={12} md={4}>
-          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '90%' }}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} sx={{ mb: 3 }} spacing={2}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3 }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 3 }}>
               <Box>
-                <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
+                <Typography variant="h6" fontWeight="700" color={EduColors.primaryGreen}>
                   Startup Sector Analysis
                 </Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -599,23 +581,23 @@ export default function EntrepreneurHub() {
                 </Typography>
               </Box>
               <Chip
-                label={`${sectorData.reduce((acc, curr) => acc + curr.startups, 0)} Startups`}
+                label={`${EduSectorData.reduce((acc, curr) => acc + curr.startups, 0)} Startups`}
                 size="small"
-                sx={{ bgcolor: `${COLORS.primaryGreen}15`, color: COLORS.primaryGreen }}
+                sx={{ bgcolor: `${EduColors.primaryGreen}15`, color: EduColors.primaryGreen }}
               />
             </Stack>
 
-            <ChartContainer height={200}>
+            <EduSimpleChartContainer height={200}>
               <PieChart>
                 <Pie
-                  data={sectorData}
+                  data={EduSectorData}
                   innerRadius={60}
                   outerRadius={80}
                   paddingAngle={2}
                   dataKey="value"
                 >
-                  {sectorData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={[COLORS.primaryGreen, COLORS.accentGreen, '#388e3c', '#81c784'][index]} />
+                  {EduSectorData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={[EduColors.primaryGreen, EduColors.accentGreen, '#388e3c', '#81c784'][index]} />
                   ))}
                 </Pie>
                 <Tooltip
@@ -627,20 +609,20 @@ export default function EntrepreneurHub() {
                   }}
                 />
               </PieChart>
-            </ChartContainer>
+            </EduSimpleChartContainer>
 
-            <Stack spacing={2} sx={{ mt: 3 }}>
-              {sectorData.map((item, index) => (
+            <Stack spacing={2} >
+              {EduSectorData.map((item, index) => (
                 <Box key={item.name} sx={{
-                  p: 2,
+                  p: 1,
                   borderRadius: '8px',
-                  border: `1px solid ${COLORS.border}`,
-                  bgcolor: index === 0 ? `${COLORS.primaryGreen}05` : 'transparent'
+                  border: `1px solid ${EduColors.border}`,
+                  bgcolor: index === 0 ? `${EduColors.primaryGreen}05` : 'transparent'
                 }}>
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
                     <Stack direction="row" spacing={1.5} alignItems="center">
-                      <Box sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: [COLORS.primaryGreen, COLORS.accentGreen, '#388e3c', '#81c784'][index] }} />
-                      <Typography variant="body2" fontWeight="600" color={COLORS.primaryGreen}>
+                      <Box sx={{ width: 10, height: 10, borderRadius: '50%', bgcolor: [EduColors.primaryGreen, EduColors.accentGreen, '#388e3c', '#81c784'][index] }} />
+                      <Typography variant="body2" fontWeight="600" color={EduColors.primaryGreen}>
                         {item.name}
                       </Typography>
                     </Stack>
@@ -650,7 +632,7 @@ export default function EntrepreneurHub() {
                     <Typography variant="caption" color="textSecondary">
                       {item.startups} Startups
                     </Typography>
-                    <Typography variant="caption" fontWeight="600" color={COLORS.primaryGreen}>
+                    <Typography variant="caption" fontWeight="600" color={EduColors.primaryGreen}>
                       {item.funding}
                     </Typography>
                   </Stack>
@@ -661,36 +643,18 @@ export default function EntrepreneurHub() {
         </Grid>
       </Grid>
 
-
-      {/* Monthly Activity Metrics */}
-      <Grid container spacing={2} sx={{ mb: 4 }}>
-        {monthlyMetrics.map((metric, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
-            <MetricCard
-              title={metric.metric}
-              value={metric.value}
-              change={metric.change}
-              icon={metric.icon}
-              color={COLORS.primaryGreen}
-            />
-          </Grid>
-        ))}
-      </Grid>
-
-      {/* Stage Analysis and Top Investors */}
-      <Grid container spacing={3} sx={{ my: 5 }}>
-        {/* Stage-wise Performance */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} md={6}>
-          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '100%' }}>
-            <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen} sx={{ mb: 3 }}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '92%' }}>
+            <Typography variant="h6" fontWeight="700" color={EduColors.primaryGreen} sx={{ mb: 3 }}>
               Stage-wise Performance
             </Typography>
             <Stack spacing={3}>
-              {stageData.map((stage, index) => (
+              {EduStageData.map((stage, index) => (
                 <Box key={stage.stage}>
                   <Stack direction="row" justifyContent="space-between" sx={{ mb: 1 }}>
                     <Stack direction="row" spacing={1.5} alignItems="center">
-                      <Avatar sx={{ width: 32, height: 32, bgcolor: `${COLORS.primaryGreen}10`, fontSize: '0.875rem' }}>
+                      <Avatar sx={{ width: 32, height: 32, bgcolor: `${EduColors.primaryGreen}10`, fontSize: '0.875rem' }}>
                         {stage.count}
                       </Avatar>
                       <Box>
@@ -703,7 +667,7 @@ export default function EntrepreneurHub() {
                       size="small"
                       sx={{
                         bgcolor: parseFloat(stage.successRate) > 50 ? '#e8f5e9' : '#fff3e0',
-                        color: parseFloat(stage.successRate) > 50 ? COLORS.chartGreen : COLORS.warning,
+                        color: parseFloat(stage.successRate) > 50 ? EduColors.chartGreen : EduColors.warning,
                         fontWeight: 'bold'
                       }}
                     />
@@ -716,7 +680,7 @@ export default function EntrepreneurHub() {
                       borderRadius: 5,
                       bgcolor: '#f0f0f0',
                       '& .MuiLinearProgress-bar': {
-                        bgcolor: parseFloat(stage.successRate) > 50 ? COLORS.accentGreen : COLORS.warning,
+                        bgcolor: parseFloat(stage.successRate) > 50 ? EduColors.accentGreen : EduColors.warning,
                         borderRadius: 5
                       }
                     }}
@@ -727,53 +691,52 @@ export default function EntrepreneurHub() {
 
             <Divider sx={{ my: 3 }} />
 
-            <Typography variant="subtitle2" fontWeight="700" color={COLORS.primaryGreen} gutterBottom>
+            <Typography variant="subtitle2" fontWeight="700" color={EduColors.primaryGreen} gutterBottom>
               Incubation Pipeline Health
             </Typography>
             <Stack direction="row" spacing={3} sx={{ flexWrap: 'wrap', gap: 2 }}>
               <Box textAlign="center">
-                <Typography variant="h5" fontWeight="800" color={COLORS.primaryGreen}>4.2</Typography>
+                <Typography variant="h5" fontWeight="800" color={EduColors.primaryGreen}>4.2</Typography>
                 <Typography variant="caption" color="textSecondary">Avg Months to MVP</Typography>
               </Box>
               <Box textAlign="center">
-                <Typography variant="h5" fontWeight="800" color={COLORS.accentGreen}>68%</Typography>
+                <Typography variant="h5" fontWeight="800" color={EduColors.accentGreen}>68%</Typography>
                 <Typography variant="caption" color="textSecondary">Prototype Success</Typography>
               </Box>
               <Box textAlign="center">
-                <Typography variant="h5" fontWeight="800" color={COLORS.info}>85%</Typography>
+                <Typography variant="h5" fontWeight="800" color={EduColors.info}>85%</Typography>
                 <Typography variant="caption" color="textSecondary">Mentor Satisfaction</Typography>
               </Box>
             </Stack>
           </Card>
         </Grid>
 
-        {/* Top Investors */}
         <Grid item xs={12} md={6}>
-          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3, height: '100%' }}>
+          <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', p: 3 }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-              <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
+              <Typography variant="h6" fontWeight="700" color={EduColors.primaryGreen}>
                 Top Investor Partners
               </Typography>
-              <Button size="small" endIcon={<MoreVert />} sx={{ color: COLORS.textGrey }}>
+              <Button size="small" endIcon={<MoreVert />} sx={{ color: EduColors.textGrey }}>
                 View All
               </Button>
             </Stack>
 
             <Stack spacing={2}>
-              {topInvestors.map((investor, index) => (
-                <Paper key={investor.name} sx={{ p: 2, borderRadius: '8px', border: `1px solid ${COLORS.border}` }}>
+              {EduTopInvestors.map((investor, index) => (
+                <Paper key={investor.name} sx={{ p: 2, borderRadius: '8px', border: `1px solid ${EduColors.border}` }}>
                   <Stack direction="row" justifyContent="space-between" alignItems="center">
                     <Stack direction="row" spacing={2} alignItems="center">
-                      <Avatar sx={{ bgcolor: `${COLORS.primaryGreen}15`, color: COLORS.primaryGreen }}>
+                      <Avatar sx={{ bgcolor: `${EduColors.primaryGreen}15`, color: EduColors.primaryGreen }}>
                         <CorporateFare />
                       </Avatar>
-                      <Box>
+                      <Box> 
                         <Typography variant="body2" fontWeight="600">{investor.name}</Typography>
                         <Typography variant="caption" color="textSecondary">{investor.focus} Focus</Typography>
                       </Box>
                     </Stack>
                     <Box textAlign="right">
-                      <Typography variant="body2" fontWeight="700" color={COLORS.primaryGreen}>
+                      <Typography variant="body2" fontWeight="700" color={EduColors.primaryGreen}>
                         {investor.total}
                       </Typography>
                       <Typography variant="caption" color="textSecondary">
@@ -790,7 +753,7 @@ export default function EntrepreneurHub() {
                       borderRadius: 2,
                       bgcolor: '#f0f0f0',
                       '& .MuiLinearProgress-bar': {
-                        bgcolor: COLORS.accentGreen,
+                        bgcolor: EduColors.accentGreen,
                         borderRadius: 2
                       }
                     }}
@@ -799,14 +762,14 @@ export default function EntrepreneurHub() {
               ))}
             </Stack>
 
-            <Paper sx={{ mt: 3, p: 2.5, bgcolor: '#e8f5e9', borderRadius: '12px', border: `1px solid ${COLORS.accentGreen}40` }}>
+            <Paper sx={{ mt: 3, p: 2.5, bgcolor: '#e8f5e9', borderRadius: '12px', border: `1px solid ${EduColors.accentGreen}40` }}>
               <Stack direction="row" spacing={1.5} alignItems="flex-start">
-                <CheckCircle sx={{ color: COLORS.accentGreen, fontSize: 20, mt: 0.5, flexShrink: 0 }} />
+                <CheckCircle sx={{ color: EduColors.accentGreen, fontSize: 20, mt: 0.5, flexShrink: 0 }} />
                 <Box>
-                  <Typography variant="caption" fontWeight="700" color={COLORS.chartGreen}>
+                  <Typography variant="caption" fontWeight="700" color={EduColors.chartGreen}>
                     Investor Engagement High
                   </Typography>
-                  <Typography variant="caption" color={COLORS.chartGreen} sx={{ display: 'block', mt: 0.5 }}>
+                  <Typography variant="caption" color={EduColors.chartGreen} sx={{ display: 'block', mt: 0.5 }}>
                     15 new investor meetings scheduled this month
                   </Typography>
                 </Box>
@@ -816,23 +779,22 @@ export default function EntrepreneurHub() {
         </Grid>
       </Grid>
 
-      {/* Portfolio Overview with Enhanced Details */}
-      <Card sx={{ borderRadius: '16px', mt: 10, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
+      <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
         <Box sx={{ p: 3, borderBottom: '1px solid #f0f0f0', bgcolor: '#fafafa' }}>
-          <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems={{ xs: 'flex-start', sm: 'center' }} spacing={2}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
-              <Typography variant="h6" fontWeight="700" color={COLORS.primaryGreen}>
+              <Typography variant="h6" fontWeight="700" color={EduColors.primaryGreen}>
                 Portfolio Overview
               </Typography>
               <Typography variant="caption" color="textSecondary">
                 Top performing startups with real-time metrics
               </Typography>
             </Box>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ width: { xs: '100%', sm: 'auto' } }}>
-              <Button size="small" variant="outlined" sx={{ color: COLORS.primaryGreen, borderColor: COLORS.primaryGreen }}>
+            <Stack direction="row" spacing={2}>
+              <Button size="small" variant="outlined" sx={{ color: EduColors.primaryGreen, borderColor: EduColors.primaryGreen }}>
                 Filter
               </Button>
-              <Button size="small" endIcon={<MoreVert />} sx={{ color: COLORS.textGrey }}>
+              <Button size="small" endIcon={<MoreVert />} sx={{ color: EduColors.textGrey }}>
                 Manage All
               </Button>
             </Stack>
@@ -840,8 +802,8 @@ export default function EntrepreneurHub() {
         </Box>
         <Box sx={{ height: 420, width: '100%' }}>
           <DataGrid
-            rows={rows}
-            columns={columns}
+            rows={EduRows}
+            columns={EduColumns}
             pageSizeOptions={[5, 10]}
             initialState={{
               pagination: {
@@ -855,7 +817,7 @@ export default function EntrepreneurHub() {
               border: 'none',
               '& .MuiDataGrid-columnHeaders': {
                 bgcolor: '#fafafa',
-                color: COLORS.primaryGreen,
+                color: EduColors.primaryGreen,
                 fontWeight: '800',
                 fontSize: '0.85rem',
                 textTransform: 'uppercase',
@@ -877,10 +839,10 @@ export default function EntrepreneurHub() {
         <Box sx={{ p: 2.5, borderTop: '1px solid #f0f0f0', bgcolor: '#fafafa' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Typography variant="caption" color="textSecondary">
-              Showing {rows.length} of 42 active incubates
+              Showing {EduRows.length} of 42 active incubates
             </Typography>
             <Stack direction="row" spacing={1} alignItems="center">
-              <Warning sx={{ fontSize: 16, color: COLORS.warning }} />
+              <Warning sx={{ fontSize: 16, color: EduColors.warning }} />
               <Typography variant="caption" color="textSecondary">
                 3 startups need immediate attention
               </Typography>

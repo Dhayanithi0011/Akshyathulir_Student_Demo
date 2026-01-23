@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import { Box, Drawer,Badge, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Avatar, Tooltip, useMediaQuery } from '@mui/material';
+import { styled, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Drawer, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Avatar, Tooltip, Badge } from '@mui/material';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import {
   Dashboard as DashboardIcon,
@@ -11,14 +11,15 @@ import {
   Science as ResearchIcon,
   Hub as AlumniIcon,
   Logout as LogoutIcon,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  Notifications as NotificationsIcon
 } from '@mui/icons-material';
-import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone"
-const drawerWidth = 280;
+
+const EduDrawerWidth = 280;
 
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
+const eduOpenedMixin = (theme) => ({
+  width: EduDrawerWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -28,7 +29,7 @@ const openedMixin = (theme) => ({
   color: '#fff',
 });
 
-const closedMixin = (theme) => ({
+const eduClosedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -39,9 +40,9 @@ const closedMixin = (theme) => ({
   color: '#fff',
 });
 
-const StyledDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const EduStyledDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-    width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
+    width: open ? EduDrawerWidth : `calc(${theme.spacing(7)} + 1px)`,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -50,12 +51,12 @@ const StyledDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'ope
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     '& .MuiDrawer-paper': {
-      ...(open ? openedMixin(theme) : closedMixin(theme)),
+      ...(open ? eduOpenedMixin(theme) : eduClosedMixin(theme)),
     },
   }),
 );
 
-const menuItems = [
+const eduMenuItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
   { text: 'Profile', icon: <ProfileIcon />, path: '/profile' },
   { text: 'Student Entrepreneurship', icon: <StatsIcon />, path: '/stats' },
@@ -67,76 +68,65 @@ const menuItems = [
 
 export default function Drawx() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
+  const [desktopOpen, setDesktopOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const eduNavigate = useNavigate();
+  const eduLocation = useLocation();
 
-  const handleMouseEnter = () => setOpen(true);
-  const handleMouseLeave = () => setOpen(false);
+  const handleDesktopEnter = () => setDesktopOpen(true);
+  const handleDesktopLeave = () => setDesktopOpen(false);
+  const handleMobileToggle = () => setMobileOpen(!mobileOpen);
 
-  const drawerContent = (
+  const drawerContent = (isOpen) => (
     <>
-      <Box sx={{ p: 1, display: 'flex', alignItems: 'center', gap: 2, minHeight: 64 }}>
+      <Box sx={{ p: 1, display: 'flex', alignItems: 'center', gap: 2 }}>
         <Avatar sx={{ bgcolor: '#fff', color: '#1a3e36' }}>🎓</Avatar>
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          sx={{
-            display: (isMobile || open) ? 'block' : 'none',
-            whiteSpace: 'nowrap',
-            opacity: (isMobile || open) ? 1 : 0,
-            transition: 'opacity 0.2s'
-          }}
-        >
-          Institutions
-        </Typography>
+        {isOpen && <Typography variant="h6" fontWeight="bold">Institutions</Typography>}
       </Box>
 
       <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.96)' }} />
 
       <List sx={{ mt: 1 }}>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
+        {eduMenuItems.map((eduItem) => (
+          <ListItem key={eduItem.text} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
               onClick={() => {
-                navigate(item.path);
-                if (isMobile) setMobileOpen(false);
+                eduNavigate(eduItem.path);
+                if (!isDesktop) {
+                  setMobileOpen(false);
+                }
               }}
               sx={{
                 minHeight: 48,
-                justifyContent: (isMobile || open) ? 'initial' : 'center',
+                justifyContent: isOpen ? 'initial' : 'center',
                 px: 2.5,
-                bgcolor: location.pathname === item.path ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-                borderLeft: location.pathname === item.path ? '4px solid #fff' : 'none',
+                bgcolor: eduLocation.pathname === eduItem.path ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                borderLeft: eduLocation.pathname === eduItem.path ? '4px solid #fff' : 'none',
                 '&:hover': {
                   bgcolor: 'rgba(255, 255, 255, 0.1)',
                 },
               }}
             >
-              <ListItemIcon sx={{ minWidth: 0, mr: (isMobile || open) ? 3 : 'auto', justifyContent: 'center', color: 'inherit' }}>
-                {item.icon}
+              <ListItemIcon sx={{ minWidth: 0, mr: isOpen ? 3 : 'auto', justifyContent: 'center', color: 'inherit' }}>
+                {eduItem.icon}
               </ListItemIcon>
-              <ListItemText primary={item.text} sx={{ opacity: (isMobile || open) ? 1 : 0 }} />
+              <ListItemText primary={eduItem.text} sx={{ opacity: isOpen ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
 
-
       <Box sx={{ marginTop: 'auto', mb: 2 }}>
         <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.99)', mb: 1 }} />
         <ListItem disablePadding sx={{ display: 'block' }}>
-          <ListItemButton sx={{ minHeight: 48, justifyContent: (isMobile || open) ? 'initial' : 'center', px: 2.5, color: '#fff', '&:hover': { color: '#ff6b6b' }, '&:active': { color: '#ff6b6b' } }}>
-            <ListItemIcon sx={{ minWidth: 0, mr: (isMobile || open) ? 3 : 'auto', justifyContent: 'center', color: 'inherit' }}>
+          <ListItemButton sx={{ minHeight: 48, justifyContent: isOpen ? 'initial' : 'center', px: 2.5, color: '#fff', '&:hover': { color: '#ff6b6b' }, '&:active': { color: '#ff6b6b' } }}>
+            <ListItemIcon sx={{ minWidth: 0, mr: isOpen ? 3 : 'auto', justifyContent: 'center', color: 'inherit' }}>
               <LogoutIcon />
             </ListItemIcon>
-            <ListItemText primary="Logout" sx={{ opacity: (isMobile || open) ? 1 : 0 }} />
+            <ListItemText primary="Logout" sx={{ opacity: isOpen ? 1 : 0 }} />
           </ListItemButton>
         </ListItem>
       </Box>
@@ -145,53 +135,80 @@ export default function Drawx() {
 
   return (
     <Box sx={{ display: 'flex', bgcolor: '#f4f7f6', minHeight: '100vh' }}>
-      {/* Mobile Drawer */}
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{ keepMounted: true }}
+      <AppBar
+        position="fixed"
         sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, backgroundColor: '#1a3e36', color: '#fff' },
+          display: { md: 'none' },
+          bgcolor: '#1a3e36',
         }}
       >
-        {drawerContent}
-      </Drawer>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleMobileToggle}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Institutions
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
-      {/* Desktop Drawer */}
-      <StyledDrawer
-        variant="permanent"
-        open={open}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        sx={{ display: { xs: 'none', md: 'block' } }}
-      >
-        {drawerContent}
-      </StyledDrawer>
+      {isDesktop ? (
+        <EduStyledDrawer
+          variant="permanent"
+          open={desktopOpen}
+          onMouseEnter={handleDesktopEnter}
+          onMouseLeave={handleDesktopLeave}
+        >
+          {drawerContent(desktopOpen)}
+        </EduStyledDrawer>
+      ) : (
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleMobileToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: EduDrawerWidth,
+              backgroundColor: '#1a3e36',
+              color: '#fff',
+            },
+          }}
+        >
+          {drawerContent(mobileOpen)}
+        </Drawer>
+      )}
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3, minWidth: 0 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4, bgcolor: '#1a3e36', p: 2, borderRadius: 2, boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2, display: { md: 'none' }, color: '#fff' }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h5" fontWeight="bold" color="#fff" sx={{ fontSize: { xs: '1.1rem', sm: '1.5rem' } }}>Educational Institutional Dashboard</Typography>
-          </Box>
+      <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, md: 3 } }}>
+        <Toolbar sx={{ display: { md: 'none' } }} />
+
+        <Box sx={{
+          display: { xs: 'none', md: 'flex' },
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 4,
+          bgcolor: '#1a3e36',
+          p: 2,
+          borderRadius: 2,
+          boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+        }}>
+          <Typography variant="h5" fontWeight="bold" color="#fff">Educational Institutional Dashboard</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Badge
-              badgeContent={4}
-              color="error"
-              sx={{
-                '& .MuiBadge-badge': {
-                  fontSize: '0.65rem',
-                  height: '16px',
-                  minWidth: '16px'
-                }
-              }}
-            >
-              <NotificationsNoneTwoToneIcon sx={{ color: 'white' }} />
-            </Badge>
+            <IconButton aria-label="notifications" sx={{ color: 'white' }}>
+              <Badge badgeContent={5} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <Tooltip title="Account settings">
               <IconButton size="small">
                 <Avatar sx={{ width: 32, height: 32 }} />
@@ -199,7 +216,7 @@ export default function Drawx() {
             </Tooltip>
             <IconButton sx={{ color: '#fff', '&:hover': { color: '#ff6b6b' }, '&:active': { color: '#ff6b6b' } }}><LogoutIcon /></IconButton>
           </Box>
-        </Box>
+        </Box> 
 
         <Outlet />
       </Box>

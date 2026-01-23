@@ -1,20 +1,16 @@
 import * as React from "react";
 import {
   Box, Grid, Typography, Card, CardContent,
-  Button, Chip, Dialog, DialogTitle, DialogContent,
+  Button, Chip, Dialog, DialogContent,
   TextField, MenuItem, Select, FormControl, InputLabel,
-  Paper, Divider, Avatar, LinearProgress, IconButton,
+  Paper, Avatar, LinearProgress, IconButton,
   Tabs, Tab, List, ListItem, ListItemText, ListItemAvatar,
-  Badge, Stack, Switch, FormControlLabel, Tooltip,
+  Stack, Tooltip,
   Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, Accordion, AccordionSummary, AccordionDetails,
-  Slider, InputAdornment, Menu, useMediaQuery
+  TableRow
 } from "@mui/material";
-import { useTheme as useMuiTheme } from "@mui/material/styles";
 import {
-  DataGrid,
-  GridToolbar,
-  GridActionsCellItem
+  DataGrid
 } from "@mui/x-data-grid";
 import {
   PieChart,
@@ -28,528 +24,218 @@ import {
   TrendingUp,
   MonetizationOn,
   AssignmentTurnedIn,
-  Timeline,
-  BarChart as BarChartIcon,
-  PieChart as PieChartIcon,
-  CloudDownload,
   FilterList,
-  ExpandMore,
-  Notifications,
   Search,
-  CalendarToday,
-  Person,
-  Business,
-  Science,
-  Computer,
-  Engineering,
-  MedicalServices,
-  Agriculture,
-  Security,
-  Language,
-  Share,
-  MoreVert,
   Star,
   StarBorder,
-  TrendingDown,
-  TrendingFlat,
-  Visibility,
-  Download,
-  Refresh,
-  Sort,
-  Info,
-  Warning,
-  CheckCircle,
-  Cancel,
-  Schedule,
-  Assessment,
-  Insights,
   ArrowUpward,
-  ArrowDownward,
-  People,
-  LocalOffer,
-  AccountBalance,
-  AttachMoney,
   Verified,
-  FileCopy,
-  ContentCopy
+  Schedule,
+  CloudDownload,
+  Refresh,
+  BarChartOutlined,
+  Timeline
 } from "@mui/icons-material";
+
 import { Patents as patentData } from "../Data/Patents";
 
-// Color theme matching the sample image
-const theme = {
-  primary: "#4CAF50", // Green from image
-  secondary: "#2196F3", // Blue
-  warning: "#FF9800", // Orange
-  error: "#f44336",
-  success: "#4CAF50",
-  info: "#2196F3",
-  background: "#f5f5f5",
+const EduTheme = {
+  primary: "#1a3e36",      
+  secondary: "#2e7d32",    
+  accent: "#ebf5f0",       
+  background: "#f4f7f6",  
   cardBg: "#ffffff",
   textPrimary: "#1a3e36",
-  textSecondary: "#666666"
-};
-
-// Domain icons mapping
-const domainIcons = {
-  "Biotechnology": <Science sx={{ color: "#9C27B0" }} />,
-  "Software": <Computer sx={{ color: "#2196F3" }} />,
-  "Electronics": <Engineering sx={{ color: "#FF9800" }} />,
-  "Mechanical": <Engineering sx={{ color: "#795548" }} />,
-  "Medical": <MedicalServices sx={{ color: "#E91E63" }} />,
-  "Agriculture": <Agriculture sx={{ color: "#4CAF50" }} />,
-  "Security": <Security sx={{ color: "#F44336" }} />,
-  "Other": <Language sx={{ color: "#607D8B" }} />
+  textSecondary: "#6a7c78",
+  borderRadius: "16px"
 };
 
 export default function Patent() {
-  const muiTheme = useMuiTheme();
-  const fullScreen = useMediaQuery(muiTheme.breakpoints.down('md'));
-  const [rows, setRows] = React.useState(patentData || []);
-  const [open, setOpen] = React.useState(false);
-  const [editMode, setEditMode] = React.useState(false);
-  const [editingId, setEditingId] = React.useState(null);
-  const [filter, setFilter] = React.useState("all");
-  const [tabValue, setTabValue] = React.useState(0);
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [showStarred, setShowStarred] = React.useState(false);
-  const [revenueThreshold, setRevenueThreshold] = React.useState(100000);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [eduRows, setEduRows] = React.useState(patentData);
+  const [eduOpen, setEduOpen] = React.useState(false);
+  const [eduEditMode, setEduEditMode] = React.useState(false);
+  const [eduEditingId, setEduEditingId] = React.useState(null);
+  const [eduSearchTerm, setEduSearchTerm] = React.useState("");
 
-  const [form, setForm] = React.useState({
+  const [eduForm, setEduForm] = React.useState({
     title: "",
     inventors: "",
     department: "",
-    domain: "",
+    domain: "", 
     filingDate: "",
-    publicationDate: "",
-    grantDate: "",
     status: "Filed",
-    applicationNo: "",
-    patentNo: "",
-    country: "India",
-    applicantName: "",
-    assignee: "",
-    ipcClass: "",
-    abstract: "",
-    attorney: "",
     commercialized: "No",
-    licensee: "",
-    revenue: "",
-    validityTill: "",
-    remarks: "",
-    priorityDate: "",
-    starred: false
+    revenue: ""
   });
 
-  const handleSubmit = () => {
-    if (editMode && editingId) {
-      setRows(rows.map(row => row.id === editingId ? { ...row, ...form, revenue: Number(form.revenue || 0) } : row));
+  const handleEduSubmit = () => {
+    if (eduEditMode && eduEditingId) {
+      setEduRows(eduRows.map(row => row.id === eduEditingId ? { ...row, ...eduForm, revenue: Number(eduForm.revenue || 0) } : row));
     } else {
-      const newId = Math.max(...rows.map(r => r.id)) + 1;
-      setRows([...rows, { id: newId, ...form, revenue: Number(form.revenue || 0) }]);
+      const newId = Math.max(...eduRows.map(r => r.id)) + 1;
+      setEduRows([...eduRows, { id: newId, ...eduForm, revenue: Number(eduForm.revenue || 0) }]);
     }
-    setOpen(false);
-    resetForm();
+    setEduOpen(false);
+    resetEduForm();
   };
 
-  const handleEdit = (id) => {
-    const patent = rows.find(r => r.id === id);
+  const handleEduEdit = (id) => {
+    const patent = eduRows.find(r => r.id === id);
     if (patent) {
-      setForm(patent);
-      setEditMode(true);
-      setEditingId(id);
-      setOpen(true);
+      setEduForm(patent);
+      setEduEditMode(true);
+      setEduEditingId(id);
+      setEduOpen(true);
     }
   };
 
-  const handleDelete = (id) => {
-    setRows(rows.filter(r => r.id !== id));
+  const handleEduDelete = (id) => {
+    setEduRows(eduRows.filter(r => r.id !== id));
   };
 
-  const handleStarToggle = (id) => {
-    setRows(rows.map(row => row.id === id ? { ...row, starred: !row.starred } : row));
-  };
-
-  const resetForm = () => {
-    setForm({
+  const resetEduForm = () => {
+    setEduForm({
       title: "",
       inventors: "",
       department: "",
       domain: "",
       filingDate: "",
-      publicationDate: "",
-      grantDate: "",
       status: "Filed",
-      applicationNo: "",
-      patentNo: "",
-      country: "India",
-      applicantName: "",
-      assignee: "",
-      ipcClass: "",
-      abstract: "",
-      attorney: "",
       commercialized: "No",
-      licensee: "",
-      revenue: "",
-      validityTill: "",
-      remarks: "",
-      priorityDate: "",
-      starred: false
+      revenue: ""
     });
-    setEditMode(false);
-    setEditingId(null);
+    setEduEditMode(false);
+    setEduEditingId(null);
   };
 
-  // -------- ANALYTICS --------
-  const filteredRows = React.useMemo(() => {
-    let filtered = filter === "all" ? rows :
-      filter === "commercialized" ? rows.filter(p => p.commercialized === "Yes") :
-        rows.filter(p => p.status === filter);
+  const eduFilteredRows = eduRows.filter(p =>
+    p.title.toLowerCase().includes(eduSearchTerm.toLowerCase()) ||
+    p.inventors.toLowerCase().includes(eduSearchTerm.toLowerCase())
+  );
 
-    if (searchTerm) {
-      filtered = filtered.filter(p =>
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.inventors.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.domain.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    if (showStarred) {
-      filtered = filtered.filter(p => p.starred);
-    }
-
-    return filtered.filter(p => (p.revenue || 0) >= revenueThreshold);
-  }, [rows, filter, searchTerm, showStarred, revenueThreshold]);
-
-  const statusCount = {
-    Granted: rows.filter(p => p.status === "Granted").length,
-    Published: rows.filter(p => p.status === "Published").length,
-    Filed: rows.filter(p => p.status === "Filed").length,
-    Pending: rows.filter(p => p.status === "Pending").length
+  const eduStatusCount = {
+    Granted: eduRows.filter(p => p.status === "Granted").length,
+    Published: eduRows.filter(p => p.status === "Published").length,
+    Filed: eduRows.filter(p => p.status === "Filed").length
   };
 
-  const commercialized = rows.filter(p => p.commercialized === "Yes");
-  const totalRevenue = commercialized.reduce((s, p) => s + (p.revenue || 0), 0);
-  const avgRevenue = commercialized.length ? Math.round(totalRevenue / commercialized.length) : 0;
-  const conversionRate = rows.length ? Math.round((statusCount.Granted / rows.length) * 100) : 0;
-  const starredCount = rows.filter(p => p.starred).length;
+  const eduCommercialized = eduRows.filter(p => p.commercialized === "Yes");
+  const eduTotalRevenue = eduCommercialized.reduce((s, p) => s + (p.revenue || 0), 0);
 
-  // Department distribution
-  const deptMap = {};
-  rows.forEach(p => { deptMap[p.department] = (deptMap[p.department] || 0) + 1; });
-  const deptLabels = Object.keys(deptMap);
-  const deptValues = Object.values(deptMap);
+  const eduDomainData = [
+    { domain: 'Biotech', count: eduRows.filter(r => r.domain === 'Biotechnology').length || 5 },
+    { domain: 'Software', count: eduRows.filter(r => r.domain === 'Software').length || 3 },
+    { domain: 'Agri', count: 8 },
+    { domain: 'Electronics', count: 4 },
+  ];
 
-  // Yearly filings
-  const yearMap = {};
-  rows.forEach(p => {
-    if (p.filingDate) {
-      const y = new Date(p.filingDate).getFullYear();
-      yearMap[y] = (yearMap[y] || 0) + 1;
-    }
-  });
-  const yearLabels = Object.keys(yearMap).sort();
-  const yearValues = yearLabels.map(y => yearMap[y]);
+  const eduRevenueByPatent = eduRows
+    .filter(r => r.revenue > 0)
+    .map(r => ({ title: r.title.substring(0, 10) + '...', revenue: r.revenue }));
 
-  // Monthly trend (last 6 months)
-  const monthlyData = Array.from({ length: 6 }, (_, i) => {
-    const date = new Date();
-    date.setMonth(date.getMonth() - i);
-    const monthYear = date.toLocaleString('default', { month: 'short', year: '2-digit' });
-    const filings = rows.filter(p => {
-      if (!p.filingDate) return false;
-      const filingDate = new Date(p.filingDate);
-      return filingDate.getMonth() === date.getMonth() &&
-        filingDate.getFullYear() === date.getFullYear();
-    }).length;
-    return { month: monthYear, filings: filings || Math.floor(Math.random() * 5) + 1 };
-  }).reverse();
-
-  // Revenue by department
-  const revenueByDept = {};
-  commercialized.forEach(p => {
-    revenueByDept[p.department] = (revenueByDept[p.department] || 0) + (p.revenue || 0);
-  });
-
-  // Top performing patents
-  const topPatents = [...rows]
-    .filter(p => p.revenue > 0)
-    .sort((a, b) => (b.revenue || 0) - (a.revenue || 0))
-    .slice(0, 5);
-
-  // Expiring soon (within next year)
-  const expiringSoon = rows.filter(p => {
-    if (!p.validityTill) return false;
-    const validityDate = new Date(p.validityTill);
-    const oneYearFromNow = new Date();
-    oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
-    return validityDate <= oneYearFromNow && validityDate >= new Date();
-  }).slice(0, 5);
-
-  // -------- GRID COLUMNS --------
-  const columns = [
-    {
-      field: "starred",
-      headerName: "",
-      width: 60,
-      renderCell: (params) => (
-        <IconButton
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation();
-            handleStarToggle(params.id);
-          }}
-        >
-          {params.value ? <Star sx={{ color: "#FF9800" }} /> : <StarBorder />}
-        </IconButton>
-      )
-    },
-    {
-      field: "id",
-      headerName: "ID",
-      width: 70,
-      renderCell: (params) => (
-        <Avatar sx={{ bgcolor: theme.primary, width: 32, height: 32, fontSize: 14 }}>
-          {params.value}
-        </Avatar>
-      )
-    },
-    {
-      field: "title",
-      headerName: "Patent Title",
-      flex: 1,
-      minWidth: 200,
-      renderCell: (params) => (
-        <Box>
-          <Typography variant="body2" fontWeight="500" noWrap>
-            {params.value}
-          </Typography>
-          <Typography variant="caption" color="textSecondary" noWrap>
-            {params.row.domain}
-          </Typography>
-        </Box>
-      )
-    },
-    {
-      field: "inventors",
-      headerName: "Inventors",
-      width: 150,
-      minWidth: 120,
-      renderCell: (params) => (
-        <Typography variant="body2" noWrap>
-          {params.value.split(",")[0]} +{params.value.split(",").length - 1}
-        </Typography>
-      )
-    },
-    {
-      field: "department",
-      headerName: "Department",
-      width: 130,
-      minWidth: 100,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          size="small"
-          sx={{ bgcolor: `${theme.primary}20`, color: theme.primary }}
-        />
-      )
-    },
-    {
-      field: "filingDate",
-      headerName: "Filed",
-      width: 100,
-      minWidth: 80,
-      valueFormatter: (params) => {
-        const val = params?.value ?? params;
-        return val ? new Date(val).getFullYear() : "";
-      }
-    },
+  const eduColumns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "title", headerName: "Patent Title", flex: 1, minWidth: 200 },
+    { field: "department", headerName: "Dept", width: 120 },
     {
       field: "status",
       headerName: "Status",
       width: 120,
-      minWidth: 100,
       renderCell: (params) => (
         <Chip
           label={params.value}
           size="small"
           sx={{
-            bgcolor: params.value === "Granted" ? `${theme.success}20` :
-              params.value === "Published" ? `${theme.secondary}20` : `${theme.warning}20`,
-            color: params.value === "Granted" ? theme.success :
-              params.value === "Published" ? theme.secondary : theme.warning
+            fontWeight: "bold",
+            bgcolor: params.value === "Granted" ? "#e8f5e9" :
+              params.value === "Published" ? "#e3f2fd" : "#fff3e0",
+            color: params.value === "Granted" ? EduTheme.secondary :
+              params.value === "Published" ? "#1976d2" : "#ef6c00"
           }}
         />
       )
     },
-    {
-      field: "commercialized",
-      headerName: "Comm.",
-      width: 100,
-      minWidth: 80,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          size="small"
-          color={params.value === "Yes" ? "success" : "default"}
-          variant={params.value === "Yes" ? "filled" : "outlined"}
-        />
-      )
-    },
+    { field: "commercialized", headerName: "Comm.", width: 100 },
     {
       field: "revenue",
       headerName: "Revenue",
       width: 120,
-      minWidth: 100,
       renderCell: (params) => (
-        <Typography fontWeight="500" color={params.value > 0 ? "success.main" : "text.secondary"}>
+        <Typography fontWeight="600" color={params.value > 0 ? EduTheme.secondary : EduTheme.textSecondary}>
           {params.value ? `₹${params.value.toLocaleString()}` : "-"}
         </Typography>
       )
     },
     {
       field: "actions",
-      type: "actions",
       headerName: "Actions",
-      width: 100,
-      minWidth: 80,
-      getActions: (params) => [
-        <GridActionsCellItem
-          key="edit"
-          icon={<EditIcon />}
-          label="Edit"
-          onClick={() => handleEdit(params.id)}
-        />,
-        <GridActionsCellItem
-          key="delete"
-          icon={<DeleteIcon />}
-          label="Delete"
-          onClick={() => handleDelete(params.id)}
-          sx={{ color: "error.main" }}
-        />
-      ]
+      width: 120,
+      renderCell: (params) => (
+        <Box>
+          <IconButton size="small" onClick={() => handleEduEdit(params.id)} sx={{ color: EduTheme.primary }}>
+            <EditIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small" onClick={() => handleEduDelete(params.id)} color="error">
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      )
     }
   ];
 
   return (
-    <Box sx={{ p: { xs: 1, sm: 2, md: 3 }, bgcolor: theme.background, minHeight: "100vh" }}>
+    <Box sx={{ p: { xs: 2, md: 4 }, bgcolor: EduTheme.background, minHeight: "100vh", fontFamily: "'Inter', sans-serif" }}>
 
-      {/* Header */}
-      <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} justifyContent="space-between" alignItems={{ xs: "stretch", sm: "center" }} mb={3} gap={2}>
+      <Box display="flex" flexDirection={{ xs: "column", md: "row" }} justifyContent="space-between" alignItems={{ xs: "flex-start", md: "center" }} mb={4} gap={2}>
         <Box>
-          <Typography variant="h4" fontWeight={700} color={theme.textPrimary} fontSize={{ xs: "1.5rem", sm: "2rem" }}>
+          <Typography variant="h4" fontWeight={800} color={EduTheme.primary} sx={{ letterSpacing: "-0.5px", fontSize: { xs: "1.75rem", md: "2.125rem" } }}>
             Patent Portfolio
           </Typography>
-          <Typography variant="body2" color={theme.textSecondary}>
-            Track, manage and analyze your patent assets
+          <Typography variant="body2" color={EduTheme.textSecondary} fontWeight={500}>
+            Strategic asset management for CropSmile
           </Typography>
         </Box>
-        <Box display="flex" gap={2} flexWrap="wrap">
+        <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2} width={{ xs: "100%", md: "auto" }}>
           <TextField
             size="small"
-            placeholder="Search patents..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search assets..."
+            value={eduSearchTerm}
+            onChange={(e) => setEduSearchTerm(e.target.value)}
             InputProps={{
-              startAdornment: <Search sx={{ mr: 1, color: "text.secondary" }} />
+              startAdornment: <Search sx={{ mr: 1, color: EduTheme.textSecondary }} />,
+              sx: { borderRadius: "10px", bgcolor: "white", "& fieldset": { border: "none" }, boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }
             }}
-            sx={{ minWidth: 200, flexGrow: { xs: 1, sm: 0 } }}
+            sx={{ minWidth: { xs: "100%", md: 240 } }}
           />
-          <Button
-            variant="outlined"
-            startIcon={<FilterList />}
-            onClick={() => setFilter(filter === "commercialized" ? "all" : "commercialized")}
-            sx={{ borderColor: theme.primary, color: theme.primary }}
-          >
-            {filter === "commercialized" ? "All" : "Comm."}
-          </Button>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={() => { resetForm(); setOpen(true); }}
-            sx={{ bgcolor: theme.primary, "&:hover": { bgcolor: "#3d8b40" } }}
+            onClick={() => { resetEduForm(); setEduOpen(true); }}
+            sx={{ bgcolor: EduTheme.primary, borderRadius: "10px", px: 3, textTransform: "none", fontWeight: "bold", "&:hover": { bgcolor: "#2c5e50" }, width: { xs: "100%", sm: "auto" } }}
           >
-            Add
+            Add Patent
           </Button>
         </Box>
       </Box>
 
-      {/* KPI Cards - Responsive */}
-      <Grid container spacing={2} mb={4}>
+      <Grid container spacing={3} mb={4}>
         {[
-          {
-            title: "Total Patents",
-            value: rows.length,
-            change: "+2 this month",
-            icon: <AssignmentTurnedIn sx={{ color: theme.textPrimary }} />,
-            color: theme.textPrimary,
-            trend: "up"
-          },
-          {
-            title: "Granted",
-            value: statusCount.Granted,
-            change: `${conversionRate}% conversion`,
-            icon: <Verified sx={{ color: theme.textPrimary }} />,
-            color: theme.textPrimary,
-            trend: "up"
-          },
-          {
-            title: "Total Revenue",
-            value: `₹${totalRevenue.toLocaleString()}`,
-            change: `Avg: ₹${avgRevenue.toLocaleString()}`,
-            icon: <MonetizationOn sx={{ color: theme.textPrimary }} />,
-            color: theme.textPrimary,
-            trend: "up"
-          },
-          {
-            title: "Commercialized",
-            value: commercialized.length,
-            change: `${Math.round((commercialized.length / rows.length) * 100)}% rate`,
-            icon: <TrendingUp sx={{ color: theme.textPrimary }} />,
-            color: theme.textPrimary,
-            trend: "up"
-          },
-          {
-            title: "Starred",
-            value: starredCount,
-            change: `${Math.round((starredCount / rows.length) * 100)}%`,
-            icon: <Star sx={{ color: theme.textPrimary }} />,
-            color: theme.textPrimary,
-            trend: "flat"
-          },
-          {
-            title: "Pending",
-            value: statusCount.Pending,
-            change: `${Math.round((statusCount.Pending / rows.length) * 100)}%`,
-            icon: <Schedule sx={{ color: theme.textPrimary }} />,
-            color: theme.textPrimary,
-            trend: "down"
-          }
+          { title: "Total Patents", value: eduRows.length, icon: <AssignmentTurnedIn />, color: EduTheme.primary },
+          { title: "Granted", value: eduStatusCount.Granted, icon: <Verified />, color: EduTheme.secondary },
+          { title: "Total Revenue", value: `₹${(eduTotalRevenue / 1000).toFixed(1)}K`, icon: <MonetizationOn />, color: "#FFB300" },
+          { title: "Commercialized", value: eduCommercialized.length, icon: <TrendingUp />, color: EduTheme.secondary }
         ].map((kpi, i) => (
-          <Grid item xs={12} sm={6} md={4} lg={2} key={i}>
-            <Card sx={{ 
-              bgcolor: theme.cardBg, 
-              border: `1px solid muted`,
-              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-              height: "100%"
-            }}>
-              <CardContent>
-                <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
+          <Grid item xs={12} sm={6} md={3} key={i}>
+            <Card sx={{ borderRadius: EduTheme.borderRadius, boxShadow: "0 10px 30px rgba(0,0,0,0.03)", border: "1px solid #edf2f0" }}>
+              <CardContent sx={{ p: 3 }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
                   <Box>
-                    <Typography variant="body2" color="textSecondary" fontSize="0.75rem">{kpi.title}</Typography>
-                    <Typography variant="h6" fontWeight={700} mt={0.5}>{kpi.value}</Typography>
+                    <Typography variant="body2" fontWeight="700" color={EduTheme.textSecondary} sx={{ mb: 1 }}>{kpi.title}</Typography>
+                    <Typography variant="h4" fontWeight="800" color={EduTheme.primary}>{kpi.value}</Typography>
                   </Box>
-                  <Avatar sx={{ bgcolor: `${kpi.color}15`, width: 36, height: 36 }}>
+                  <Avatar sx={{ bgcolor: `${kpi.color}15`, color: kpi.color, width: 56, height: 56 }}>
                     {kpi.icon}
                   </Avatar>
-                </Box>
-                <Box display="flex" alignItems="center" gap={0.5}>
-                  {kpi.trend === "up" ? <ArrowUpward sx={{ fontSize: 14, color: theme.success }} /> :
-                   kpi.trend === "down" ? <ArrowDownward sx={{ fontSize: 14, color: theme.error }} /> :
-                   <TrendingFlat sx={{ fontSize: 14, color: theme.textSecondary }} />}
-                  <Typography variant="caption" color="textSecondary">
-                    {kpi.change}
-                  </Typography>
                 </Box>
               </CardContent>
             </Card>
@@ -557,504 +243,160 @@ export default function Patent() {
         ))}
       </Grid>
 
-      {/* Control Panel */}
-      <Card sx={{ mb: 3, boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-        <CardContent>
-          <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} alignItems={{ xs: "stretch", sm: "center" }} justifyContent="space-between" gap={2}>
-            <Box display="flex" alignItems="center" gap={2}>
-              <Tabs 
-                value={tabValue} 
-                onChange={(e, v) => setTabValue(v)}
-                sx={{ minHeight: 40 }}
-                variant="scrollable"
-                scrollButtons="auto"
-                allowScrollButtonsMobile
-              >
-                <Tab icon={<BarChartIcon />} label="Overview" sx={{ minHeight: 40 }} />
-                <Tab icon={<Timeline />} label="Trends" sx={{ minHeight: 40 }} />
-                <Tab icon={<PieChartIcon />} label="Distribution" sx={{ minHeight: 40 }} />
-                <Tab icon={<MonetizationOn />} label="Revenue" sx={{ minHeight: 40 }} />
-              </Tabs>
-            </Box>
-            
-            <Box display="flex" gap={2} flexWrap="wrap">
-              <FormControlLabel
-                control={
-                  <Switch
-                    size="small"
-                    checked={showStarred}
-                    onChange={(e) => setShowStarred(e.target.checked)}
-                  />
-                }
-                label="Starred Only"
-              />
-              
-              <Box sx={{ minWidth: 200, flexGrow: 1 }}>
-                <Typography variant="caption" color="textSecondary">Revenue Threshold</Typography>
-                <Slider
-                  size="small"
-                  value={revenueThreshold}
-                  onChange={(e, val) => setRevenueThreshold(val)}
-                  min={0}
-                  max={1000000}
-                  step={10000}
-                  valueLabelDisplay="auto"
-                  valueLabelFormat={(value) => `₹${value.toLocaleString()}`}
+      <Grid container spacing={3} mb={4}>
+        <Grid item xs={12} md={8}>
+          <Card sx={{ borderRadius: EduTheme.borderRadius, boxShadow: "0 10px 30px rgba(0,0,0,0.03)" }}>
+            <CardContent>
+              <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h6" fontWeight="700" color={EduTheme.primary} display="flex" alignItems="center" gap={1}>
+                  <Timeline color="success" /> Revenue Performance (₹)
+                </Typography>
+              </Stack>
+              <Box sx={{ height: 300, width: '100%' }}>
+                <LineChart
+                  xAxis={[{ scaleType: 'point', data: eduRevenueByPatent.length > 0 ? eduRevenueByPatent.map(d => d.title) : ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'] }]}
+                  series={[
+                    {
+                      data: eduRevenueByPatent.length > 0 ? eduRevenueByPatent.map(d => d.revenue) : [4000, 3000, 2000, 2780, 1890, 2390],
+                      color: EduTheme.secondary,
+                      area: true,
+                      label: 'Actual Revenue'
+                    },
+                    {
+                      data: eduRevenueByPatent.length > 0 ? eduRevenueByPatent.map(d => d.revenue * 1.2) : [5000, 3500, 2500, 3200, 2500, 3000],
+                      color: EduTheme.primary,
+                      label: 'Target Revenue'
+                    }
+                  ]}
+                  height={300}
                 />
               </Box>
-              
-              <Button startIcon={<Refresh />} size="small">Refresh</Button>
-              <Button startIcon={<CloudDownload />} size="small" variant="outlined">Export</Button>
-            </Box>
-          </Box>
-        </CardContent>
-      </Card>
-
-      {/* Main Content Grid - Responsive */}
-      <Grid container spacing={3} mb={4}>
-        {/* Charts Section */}
-        <Grid item xs={12} lg={8}>
-          <Grid container spacing={3}>
-            {/* Status Distribution */}
-            <Grid item xs={12} md={6}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                    <Typography variant="h6">Status Distribution</Typography>
-                    <Chip label="Live" size="small" color="primary" />
-                  </Box>
-                  <Box sx={{ height: 300 }}>
-                    <PieChart
-                      height={300}
-                      series={[{
-                        data: [
-                          { id: 0, value: statusCount.Granted, label: "Granted", color: theme.success },
-                          { id: 1, value: statusCount.Published, label: "Published", color: theme.secondary },
-                          { id: 2, value: statusCount.Filed, label: "Filed", color: theme.warning },
-                          { id: 3, value: statusCount.Pending, label: "Pending", color: "#9E9E9E" }
-                        ],
-                        innerRadius: 60,
-                        outerRadius: 100,
-                        paddingAngle: 2,
-                        cornerRadius: 4
-                      }]}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Monthly Trend */}
-            <Grid item xs={12} md={6}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Typography variant="h6" mb={2}>Monthly Filing Trend</Typography>
-                  <Box sx={{ height: 300 }}>
-                    <BarChart
-                      height={300}
-                      xAxis={[{ 
-                        data: monthlyData.map(d => d.month),
-                        scaleType: 'band',
-                        tickLabelStyle: { angle: 45, textAnchor: 'start' }
-                      }]}
-                      series={[{
-                        data: monthlyData.map(d => d.filings),
-                        label: 'Patent Filings',
-                        color: theme.primary
-                      }]}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Department Distribution */}
-            <Grid item xs={12} md={6}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Typography variant="h6" mb={2}>Department-wise Distribution</Typography>
-                  <Box sx={{ height: 300 }}>
-                    <BarChart
-                      height={300}
-                      xAxis={[{
-                        scaleType: 'band',
-                        data: deptLabels,
-                        tickLabelStyle: { angle: 45, textAnchor: 'start' }
-                      }]}
-                      series={[{
-                        data: deptValues,
-                        label: 'Patents',
-                        color: theme.secondary
-                      }]}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Revenue by Department */}
-            <Grid item xs={12} md={6}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Typography variant="h6" mb={2}>Revenue by Department</Typography>
-                  <Box sx={{ height: 300 }}>
-                    <BarChart
-                      height={300}
-                      xAxis={[{
-                        scaleType: 'band',
-                        data: Object.keys(revenueByDept),
-                        tickLabelStyle: { angle: 45, textAnchor: 'start' }
-                      }]}
-                      series={[{
-                        data: Object.values(revenueByDept),
-                        label: 'Revenue (₹)',
-                        color: "#FF9800"
-                      }]}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
+            </CardContent>
+          </Card>
         </Grid>
 
-        {/* Sidebar Stats and Lists */}
-        <Grid item xs={12} lg={4}>
-          <Grid container spacing={3}>
-            {/* Quick Stats */}
-            <Grid item xs={12} md={6} lg={12}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Typography variant="h6" mb={3}>Quick Stats</Typography>
-                  
-                  <Box mb={3}>
-                    <Box display="flex" justifyContent="space-between" mb={1}>
-                      <Typography variant="body2" color="textSecondary">Commercialization Rate</Typography>
-                      <Typography variant="body2" fontWeight="500">
-                        {Math.round((commercialized.length / rows.length) * 100)}%
-                      </Typography>
-                    </Box>
-                    <LinearProgress 
-                      variant="determinate" 
-                      value={(commercialized.length / rows.length) * 100} 
-                      sx={{ height: 8, borderRadius: 4 }}
-                    />
-                  </Box>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ borderRadius: EduTheme.borderRadius, boxShadow: "0 10px 30px rgba(0,0,0,0.03)", height: '100%' }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="700" mb={3} color={EduTheme.primary}>Status Distribution</Typography>
+              <Box sx={{ height: 280, display: 'flex', justifyContent: 'center' }}>
+                <PieChart
+                  series={[{
+                    data: [
+                      { value: eduStatusCount.Granted, label: "Granted", color: EduTheme.secondary },
+                      { value: eduStatusCount.Published, label: "Published", color: "#81c784" },
+                      { value: eduStatusCount.Filed, label: "Filed", color: "#c8e6c9" }
+                    ],
+                    innerRadius: 60,
+                    outerRadius: 100,
+                    paddingAngle: 5,
+                    cornerRadius: 5,
+                  }]}
+                  height={280}
+                  slotProps={{ legend: { hidden: true } }}
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
 
-                  <Box mb={3}>
-                    <Box display="flex" justifyContent="space-between" mb={1}>
-                      <Typography variant="body2" color="textSecondary">Grant Conversion Rate</Typography>
-                      <Typography variant="body2" fontWeight="500">{conversionRate}%</Typography>
-                    </Box>
-                    <LinearProgress 
-                      variant="determinate" 
-                      value={conversionRate} 
-                      sx={{ height: 8, borderRadius: 4 }}
-                    />
-                  </Box>
+        <Grid item xs={12} md={4}>
+          <Card sx={{ borderRadius: EduTheme.borderRadius, boxShadow: "0 10px 30px rgba(0,0,0,0.03)" }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="700" mb={2} color={EduTheme.primary} display="flex" alignItems="center" gap={1}>
+                <BarChartOutlined /> Domain Expertise
+              </Typography>
+              <Box sx={{ height: 300 }}>
+                <BarChart
+                  layout="horizontal"
+                  yAxis={[{ scaleType: 'band', data: eduDomainData.map(d => d.domain) }]}
+                  series={[{ data: eduDomainData.map(d => d.count), color: EduTheme.primary }]}
+                  height={300}
+                  borderRadius={5}
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
 
-                  <Divider sx={{ my: 2 }} />
-
-                  <Typography variant="body2" color="textSecondary" mb={2}>Top Domains</Typography>
-                  <Stack spacing={1}>
-                    {["Biotechnology", "Software", "Electronics", "Mechanical", "Medical"].map((domain, i) => (
-                      <Box key={i} display="flex" justifyContent="space-between" alignItems="center">
-                        <Box display="flex" alignItems="center" gap={1}>
-                          {domainIcons[domain] || domainIcons.Other}
-                          <Typography variant="body2">{domain}</Typography>
-                        </Box>
-                        <Chip label={`${Math.floor(Math.random() * 20) + 5}`} size="small" />
-                      </Box>
-                    ))}
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Top Performing Patents */}
-            <Grid item xs={12} md={6} lg={12}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                    <Typography variant="h6">Top Performing Patents</Typography>
-                    <IconButton size="small">
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                  <List dense>
-                    {topPatents.map((patent, index) => (
-                      <ListItem key={patent.id} sx={{ px: 0 }}>
-                        <ListItemAvatar>
-                          <Avatar sx={{ bgcolor: index < 3 ? theme.primary : theme.secondary, width: 32, height: 32 }}>
-                            {index + 1}
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={
-                            <Typography variant="body2" fontWeight="500" noWrap>
-                              {patent.title}
-                            </Typography>
-                          }
-                          secondary={
-                            <Typography variant="caption" color="textSecondary" noWrap>
-                              {patent.domain}
-                            </Typography>
-                          }
-                        />
-                        <Chip 
-                          label={`₹${patent.revenue.toLocaleString()}`} 
-                          size="small" 
-                          color="success"
-                          variant="outlined"
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Expiring Soon */}
-            <Grid item xs={12} md={6} lg={12}>
-              <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-                <CardContent>
-                  <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                    <Typography variant="h6">Expiring Soon</Typography>
-                    <Tooltip title="Patents expiring within next year">
-                      <Info fontSize="small" color="action" />
-                    </Tooltip>
-                  </Box>
-                  <List dense>
-                    {expiringSoon.map((patent) => (
-                      <ListItem key={patent.id} sx={{ px: 0 }}>
-                        <ListItemAvatar>
-                          <Avatar sx={{ bgcolor: theme.warning, width: 32, height: 32 }}>
-                            <Warning fontSize="small" />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={
-                            <Typography variant="body2" fontWeight="500" noWrap>
-                              {patent.title}
-                            </Typography>
-                          }
-                          secondary={
-                            <Typography variant="caption" color="textSecondary">
-                              Expires: {new Date(patent.validityTill).toLocaleDateString()}
-                            </Typography>
-                          }
-                        />
-                        <Chip 
-                          label={patent.status} 
-                          size="small" 
-                          color="warning"
-                          variant="outlined"
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
+        <Grid item xs={12} md={8}>
+          <Card sx={{ borderRadius: EduTheme.borderRadius, boxShadow: "0 10px 30px rgba(0,0,0,0.03)", height: '100%' }}>
+            <CardContent>
+              <Typography variant="h6" fontWeight="700" mb={3} color={EduTheme.primary}>Recent Activity</Typography>
+              <Box sx={{ height: 280, overflowY: 'auto' }}>
+                <List sx={{ p: 0 }}>
+                  {eduRows.slice(0, 5).map((patent) => (
+                    <ListItem key={patent.id} sx={{ px: 0, py: 1, borderBottom: '1px solid #f0f4f2' }}>
+                      <ListItemAvatar>
+                        <Avatar sx={{ bgcolor: EduTheme.accent, color: EduTheme.primary, fontWeight: 'bold' }}>
+                          {patent.id}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={<Typography fontWeight="700" color={EduTheme.primary}>{patent.title}</Typography>}
+                        secondary={patent.department}
+                      />
+                      <Chip
+                        label={patent.status}
+                        size="small"
+                        sx={{ fontWeight: 'bold', bgcolor: patent.status === "Granted" ? "#e8f5e9" : "#f5f5f5" }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
 
-      {/* Recent Activity Table */}
-      <Card sx={{ mb: 4, boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-        <CardContent>
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-            <Typography variant="h6">Recent Patents</Typography>
-            <Box display="flex" gap={1}>
-              <Button size="small" startIcon={<CloudDownload />}>Export</Button>
-              <Button size="small" startIcon={<FilterList />}>Filter</Button>
-              <Button size="small" startIcon={<Sort />}>Sort</Button>
-            </Box>
+      <Card sx={{ borderRadius: EduTheme.borderRadius, boxShadow: "0 10px 30px rgba(0,0,0,0.03)" }}>
+        <CardContent sx={{ p: 0 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center" p={3}>
+            <Typography variant="h6" fontWeight="700" color={EduTheme.primary}>Asset Registry</Typography>
+            <Button startIcon={<CloudDownload />} variant="outlined" size="small" sx={{ borderRadius: '8px', color: EduTheme.primary, borderColor: EduTheme.primary }}>Export Portfolio</Button>
           </Box>
-          <Box sx={{ width: "100%", height: 400 }}>
+          <Box sx={{ height: 450, px: 2, pb: 2 }}>
             <DataGrid
-              rows={filteredRows}
-              columns={columns}
-              slots={{ toolbar: GridToolbar }}
-              initialState={{
-                pagination: { paginationModel: { pageSize: 5 } },
-                sorting: { sortModel: [{ field: 'filingDate', sort: 'desc' }] }
-              }}
-              pageSizeOptions={[5, 10, 25]}
+              rows={eduFilteredRows}
+              columns={eduColumns}
+              pageSizeOptions={[5, 10]}
+              initialState={{ pagination: { paginationModel: { pageSize: 5 } } }}
               sx={{
-                border: "none",
-                "& .MuiDataGrid-cell": { borderBottom: "1px solid #f0f0f0" },
-                "& .MuiDataGrid-columnHeaders": { bgcolor: "#fafafa" }
+                border: 'none',
+                '& .MuiDataGrid-columnHeaders': { bgcolor: EduTheme.accent, color: EduTheme.primary, borderRadius: '8px' },
+                '& .MuiDataGrid-cell': { borderBottom: '1px solid #f0f4f2' },
               }}
             />
           </Box>
         </CardContent>
       </Card>
 
-      {/* Bottom Section - Additional Info */}
-      <Grid container spacing={3}>
-        {/* Patent Status Summary */}
-        <Grid item xs={12} md={6} lg={3}>
-          <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-            <CardContent>
-              <Typography variant="h6" mb={2}>Status Summary</Typography>
-              <Stack spacing={2}>
-                {Object.entries(statusCount).map(([status, count]) => (
-                  <Box key={status} display="flex" justifyContent="space-between" alignItems="center">
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Box sx={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: '50%',
-                        bgcolor: status === "Granted" ? theme.success :
-                                 status === "Published" ? theme.secondary :
-                                 status === "Filed" ? theme.warning : "#9E9E9E"
-                      }} />
-                      <Typography variant="body2">{status}</Typography>
-                    </Box>
-                    <Chip label={count} size="small" />
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Recent Activities */}
-        <Grid item xs={12} md={6} lg={3}>
-          <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-            <CardContent>
-              <Typography variant="h6" mb={2}>Recent Activities</Typography>
-              <List dense>
-                {[
-                  { action: "Patent filed", patent: "Smart Irrigation System", time: "2 hours ago", icon: <AddIcon color="primary" /> },
-                  { action: "Status updated", patent: "AI Diagnosis Tool", time: "1 day ago", icon: <EditIcon color="secondary" /> },
-                  { action: "Revenue updated", patent: "Solar Panel Tech", time: "2 days ago", icon: <MonetizationOn color="success" /> },
-                  { action: "Patent commercialized", patent: "Water Purification", time: "1 week ago", icon: <CheckCircle color="info" /> },
-                ].map((activity, i) => (
-                  <ListItem key={i} sx={{ px: 0 }}>
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: `${theme.primary}15`, width: 32, height: 32 }}>
-                        {activity.icon}
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Typography variant="body2" fontWeight="500">
-                          {activity.action}
-                        </Typography>
-                      }
-                      secondary={
-                        <Typography variant="caption" color="textSecondary">
-                          {activity.patent} • {activity.time}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Domain Distribution */}
-        <Grid item xs={12} md={6} lg={3}>
-          <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-            <CardContent>
-              <Typography variant="h6" mb={2}>Domain Distribution</Typography>
-              <Stack spacing={1}>
-                {[
-                  { domain: "Biotechnology", count: 12, color: "#9C27B0" },
-                  { domain: "Software", count: 8, color: "#2196F3" },
-                  { domain: "Electronics", count: 6, color: "#FF9800" },
-                  { domain: "Mechanical", count: 4, color: "#795548" },
-                  { domain: "Medical", count: 3, color: "#E91E63" },
-                ].map((item, i) => (
-                  <Box key={i}>
-                    <Box display="flex" justifyContent="space-between" mb={0.5}>
-                      <Typography variant="body2">{item.domain}</Typography>
-                      <Typography variant="body2" fontWeight="500">{item.count}</Typography>
-                    </Box>
-                    <LinearProgress 
-                      variant="determinate" 
-                      value={(item.count / rows.length) * 100}
-                      sx={{ 
-                        height: 6, 
-                        borderRadius: 3,
-                        bgcolor: `${item.color}20`,
-                        "& .MuiLinearProgress-bar": { bgcolor: item.color }
-                      }}
-                    />
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Quick Actions */}
-        <Grid item xs={12} md={6} lg={3}>
-          <Card sx={{ height: "100%", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}>
-            <CardContent>
-              <Typography variant="h6" mb={2}>Quick Actions</Typography>
-              <Stack spacing={1}>
-                <Button variant="contained" startIcon={<AddIcon />} fullWidth>
-                  Add New Patent
-                </Button>
-                <Button variant="outlined" startIcon={<CloudDownload />} fullWidth>
-                  Export Data
-                </Button>
-                <Button variant="outlined" startIcon={<Share />} fullWidth>
-                  Share Report
-                </Button>
-                <Button variant="outlined" startIcon={<CalendarToday />} fullWidth>
-                  Schedule Review
-                </Button>
-                <Button variant="outlined" startIcon={<Notifications />} fullWidth>
-                  Set Reminder
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      {/* Add/Edit Patent Dialog */}
-      <Dialog open={open} onClose={() => { setOpen(false); resetForm(); }} fullWidth maxWidth="md" fullScreen={fullScreen}>
-        <DialogTitle sx={{ bgcolor: theme.primary, color: "white" }}>
-          {editMode ? "Edit Patent" : "Add New Patent"}
-        </DialogTitle>
-        <DialogContent sx={{ mt: 2 }}>
+      <Dialog open={eduOpen} onClose={() => { setEduOpen(false); resetEduForm(); }} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: EduTheme.borderRadius } }}>
+        <DialogContent sx={{ p: 4 }}>
+          <Typography variant="h5" fontWeight="800" mb={3} color={EduTheme.primary}>
+            {eduEditMode ? "Edit Patent Asset" : "Register New Patent"}
+          </Typography>
           <Grid container spacing={2}>
             {[
-              { field: "title", label: "Patent Title", required: true, width: 12 },
-              { field: "inventors", label: "Inventors", required: true, width: 12 },
-              { field: "department", label: "Department", width: 6 },
-              { field: "domain", label: "Domain", width: 6, select: true, options: ["Biotechnology", "Software", "Electronics", "Mechanical", "Medical", "Agriculture", "Security", "Other"] },
-              { field: "applicationNo", label: "Application Number", width: 6 },
-              { field: "patentNo", label: "Patent Number", width: 6 },
-              { field: "filingDate", label: "Filing Date", type: "date", width: 6 },
-              { field: "publicationDate", label: "Publication Date", type: "date", width: 6 },
-              { field: "grantDate", label: "Grant Date", type: "date", width: 6 },
-              { field: "validityTill", label: "Validity Till", type: "date", width: 6 },
-              { field: "status", label: "Status", width: 6, select: true, options: ["Filed", "Published", "Granted", "Pending", "Abandoned"] },
-              { field: "country", label: "Country", width: 6 },
-              { field: "commercialized", label: "Commercialized", width: 6, select: true, options: ["Yes", "No"] },
-              { field: "revenue", label: "Revenue (₹)", type: "number", width: 6, InputProps: { startAdornment: <InputAdornment position="start">₹</InputAdornment> } },
-              { field: "licensee", label: "Licensee", width: 6 },
-              { field: "assignee", label: "Assignee", width: 6 },
-              { field: "ipcClass", label: "IPC Class", width: 12 },
-              { field: "abstract", label: "Abstract", multiline: true, rows: 3, width: 12 },
-              { field: "remarks", label: "Remarks", multiline: true, rows: 2, width: 12 }
+              { field: "title", label: "Patent Title", required: true },
+              { field: "inventors", label: "Lead Inventors", required: true },
+              { field: "department", label: "Department" },
+              { field: "domain", label: "Domain", select: true, options: ["Biotechnology", "Software", "Electronics", "Medical", "Other"] },
+              { field: "filingDate", label: "Filing Date", type: "date" },
+              { field: "status", label: "Status", select: true, options: ["Filed", "Published", "Granted"] },
+              { field: "commercialized", label: "Commercialized", select: true, options: ["Yes", "No"] },
+              { field: "revenue", label: "Revenue (₹)", type: "number" }
             ].map((field, i) => (
-              <Grid item xs={12} sm={field.width} key={i}>
+              <Grid item xs={12} sm={field.field === "title" || field.field === "inventors" ? 12 : 6} key={i}>
                 {field.select ? (
                   <FormControl fullWidth margin="normal">
-                    <InputLabel>{field.label}</InputLabel>
+                    <InputLabel sx={{ color: EduTheme.textSecondary }}>{field.label}</InputLabel>
                     <Select
-                      value={form[field.field] || ""}
+                      value={eduForm[field.field] || ""}
                       label={field.label}
-                      onChange={(e) => setForm({ ...form, [field.field]: e.target.value })}
+                      onChange={(e) => setEduForm({ ...eduForm, [field.field]: e.target.value })}
+                      sx={{ borderRadius: "10px" }}
                     >
                       {field.options.map(opt => (
                         <MenuItem key={opt} value={opt}>{opt}</MenuItem>
@@ -1067,39 +409,29 @@ export default function Patent() {
                     margin="normal"
                     label={field.label}
                     type={field.type || "text"}
-                    value={form[field.field] || ""}
-                    onChange={(e) => setForm({ ...form, [field.field]: e.target.value })}
-                    multiline={field.multiline}
-                    rows={field.rows}
+                    value={eduForm[field.field] || ""}
+                    onChange={(e) => setEduForm({ ...eduForm, [field.field]: e.target.value })}
                     required={field.required}
-                    InputProps={field.InputProps}
-                    InputLabelProps={field.type === "date" ? { shrink: true } : undefined}
+                    InputLabelProps={field.type === "date" ? { shrink: true } : { sx: { color: EduTheme.textSecondary } }}
+                    sx={{ "& .MuiOutlinedInput-root": { borderRadius: "10px" } }}
                   />
                 )}
               </Grid>
             ))}
           </Grid>
-          <Box display="flex" gap={2} mt={3}>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => { setOpen(false); resetForm(); }}
-              sx={{ borderColor: theme.primary, color: theme.primary }}
-            >
-              Cancel
-            </Button>
+          <Box display="flex" gap={2} mt={4}>
+            <Button fullWidth variant="text" onClick={() => { setEduOpen(false); resetEduForm(); }} sx={{ color: EduTheme.textSecondary, fontWeight: "bold" }}>Cancel</Button>
             <Button
               fullWidth
               variant="contained"
-              onClick={handleSubmit}
-              sx={{ bgcolor: theme.primary, "&:hover": { bgcolor: "#3d8b40" } }}
+              onClick={handleEduSubmit}
+              sx={{ bgcolor: EduTheme.primary, py: 1.5, borderRadius: "10px", fontWeight: "bold", "&:hover": { bgcolor: "#2c5e50" } }}
             >
-              {editMode ? "Update Patent" : "Add Patent"}
+              {eduEditMode ? "Update Asset" : "Register Patent"}
             </Button>
           </Box>
         </DialogContent>
       </Dialog>
-
     </Box>
   );
 }
