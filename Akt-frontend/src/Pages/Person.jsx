@@ -115,6 +115,8 @@ export default function Person() {
   const [eduStateInput, setEduStateInput] = useState("");
   const [eduDistrictInput, setEduDistrictInput] = useState("");
   const [eduCityInput, setEduCityInput] = useState("");
+  const [eduSubmissionStatus, setEduSubmissionStatus] = useState("");
+  const [eduSubmissionMessage, setEduSubmissionMessage] = useState("");
 
   const eduHandleInputChange = (e) => {
     const { name, value } = e.target;
@@ -246,10 +248,14 @@ export default function Person() {
       websiteUrl: "", linkedinUrl: "", instagramUrl: "", facebookUrl: ""
     });
     setEduAddress({ country: "", state: "", district: "", city: "", area: "", pinCode: "" });
+    setEduSubmissionStatus("");
+    setEduSubmissionMessage("");
   };
 
   const eduHandleSubmit = async (e) => {
     e.preventDefault();
+    setEduSubmissionStatus("");
+    setEduSubmissionMessage("");
 
     const payload = {
       institutionName: eduFormData.institutionName,
@@ -259,10 +265,8 @@ export default function Person() {
       naacGrade: eduFormData.naacGrade,
       officialEmail: eduFormData.officialEmail,
       universityName: eduFormData.universityName,
-
       degrees: eduSelectedDegrees,
       departments: eduSelectedDepartments,
-
       personalInfo: {
         firstName: eduFormData.firstName,
         lastName: eduFormData.lastName,
@@ -271,7 +275,6 @@ export default function Person() {
         gender: eduFormData.gender,
         designation: eduFormData.designation,
       },
-
       contacts: {
         principal: {
           name: eduFormData.principalName,
@@ -299,9 +302,7 @@ export default function Person() {
           phone: eduFormData.placementHeadPhone,
         },
       },
-
       address: eduAddress,
-
       socialLinks: {
         website: eduFormData.websiteUrl,
         linkedin: eduFormData.linkedinUrl,
@@ -311,17 +312,23 @@ export default function Person() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/institution/register", {
+      const res = await fetch("http://localhost:8000/api/institution/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const result = await res.json();
-      alert(result.message);
+      if (!res.ok) {
+        throw new Error(result.detail || `HTTP error! status: ${res.status}`);
+      }
+
+      setEduSubmissionStatus("success");
+      setEduSubmissionMessage(result.message || "Registration submitted successfully!");
     } catch (error) {
-      console.error(error);
-      alert("Submission failed");
+      console.error("Submission error:", error);
+      setEduSubmissionStatus("error");
+      setEduSubmissionMessage("Submission failed: " + error.message);
     }
   };
 
@@ -701,7 +708,7 @@ export default function Person() {
               <Grid xs={12} md={2}>
                 <Autocomplete
                   options={eduCountries}
-                  value={eduAddress.country}
+                  value={eduAddress.country || ""}
                   inputValue={eduCountryInput}
                   onInputChange={(event, newInputValue) => setEduCountryInput(newInputValue)}
                   onChange={(event, newValue) => {
@@ -709,6 +716,7 @@ export default function Person() {
                     setEduStateInput(""); setEduDistrictInput(""); setEduCityInput("");
                     eduHandleAddressChange("country", newValue, true);
                   }}
+                  isOptionEqualToValue={(option, value) => option === value || value === ""}
                   renderInput={(params) => <TextField {...params} label="Country" required />}
                 />
               </Grid>
@@ -717,7 +725,7 @@ export default function Person() {
                 <Autocomplete
                   disabled={!eduAddress.country || eduAddress.country.length === 0}
                   options={eduStates}
-                  value={eduAddress.state}
+                  value={eduAddress.state || ""}
                   inputValue={eduStateInput}
                   onInputChange={(event, newInputValue) => setEduStateInput(newInputValue)}
                   onChange={(event, newValue) => {
@@ -725,6 +733,7 @@ export default function Person() {
                     setEduDistrictInput(""); setEduCityInput("");
                     eduHandleAddressChange("state", newValue, true);
                   }}
+                  isOptionEqualToValue={(option, value) => option === value || value === ""}
                   renderInput={(params) => <TextField {...params} label="State" required />}
                 />
               </Grid>
@@ -734,7 +743,7 @@ export default function Person() {
                   freeSolo
                   disabled={!eduAddress.state || eduAddress.state.length === 0}
                   options={eduDistricts}
-                  value={eduAddress.district}
+                  value={eduAddress.district || ""}
                   inputValue={eduDistrictInput}
                   onInputChange={(event, newInputValue) => setEduDistrictInput(newInputValue)}
                   onChange={(event, newValue) => {
@@ -742,6 +751,7 @@ export default function Person() {
                     setEduCityInput("");
                     eduHandleAddressChange("district", newValue, true);
                   }}
+                  isOptionEqualToValue={(option, value) => option === value || value === ""}
                   renderInput={(params) => <TextField {...params} label="District" required />}
                 />
               </Grid>
@@ -905,13 +915,27 @@ export default function Person() {
           </Box>
         </Paper>
 
-        <Box sx={{ display: 'flex', gap: 2, mb: 10 }}>
-          <Button type="submit" variant="contained" size="large" sx={{ backgroundColor: "#046f0bff", "&:hover": { backgroundColor: "#035a09" }, px: 4 }}>
-            Submit Application
-          </Button>
-          <Button variant="outlined" color="error" size="large" onClick={eduHandleReset}>
-            Reset Form
-          </Button>
+        <Box sx={{ mb: 10 }}>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button type="submit" variant="contained" size="large" sx={{ backgroundColor: "#046f0bff", "&:hover": { backgroundColor: "#035a09" }, px: 4 }}>
+              Submit Application
+            </Button>
+            <Button variant="outlined" color="error" size="large" onClick={eduHandleReset}>
+              Reset Form
+            </Button>
+          </Box>
+          {eduSubmissionMessage && (
+            <Typography
+              sx={{
+                mt: 2,
+                color: eduSubmissionStatus === "success" ? "success.main" : "error.main",
+                fontWeight: 500,
+                backgroundColor: eduSubmissionStatus === "success" ? "#e8f5e9" : "#ffebee"
+              }}
+            >
+              {eduSubmissionMessage}
+            </Typography>
+          )}
         </Box>
       </form>
     </Container>
