@@ -591,7 +591,7 @@ export default function Person() {
     if (!eduId) return;
     if (
       !window.confirm(
-        "Are you sure you want to permanently delete this application? This action cannot be undone.",
+        "Are you sure you want to permanently delete this application? This action cannot be undone .",
       )
     )
       return;
