@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Box, Grid, Paper, Typography, Table, TableBody, TableCell,
     TableContainer, TableHead, TableRow, Avatar, AvatarGroup,
-    LinearProgress, Chip, Card, CardContent, TextField, MenuItem,Button,
+    LinearProgress, Chip, Card, CardContent, TextField, MenuItem, Button,
 } from '@mui/material';
 import BusinessIcon from '@mui/icons-material/Business';
 import PeopleIcon from '@mui/icons-material/People';
@@ -14,6 +14,16 @@ const EDU_COLORS = {
     background: '#f1f8f4',
     accent: '#4caf50'
 };
+
+const EduFormRow = ({ children }) => (
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 2, md: 3 }, mb: { xs: 2, md: 3 } }}>
+        {React.Children.map(children, (child) => (
+            <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(50% - 0.5rem)', md: '1 1 auto' }, minWidth: '0', display: 'flex', alignItems: 'flex-start', '& > *': { width: '100%' } }}>
+                {child}
+            </Box>
+        ))}
+    </Box>
+);
 
 const PlaceMent = () => {
     const initialAddress = {
@@ -31,15 +41,6 @@ const PlaceMent = () => {
         { id: 5, name: 'Accenture', role: 'Associate Software Engineer', students: 102, package: '8.2 LPA', growth: '+15%' },
     ];
 
-    const EduFormRow = ({ children }) => (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 2, md: 3 }, mb: { xs: 2, md: 3 } }}>
-            {React.Children.map(children, (child) => (
-                <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(50% - 0.5rem)', md: '1 1 auto' }, minWidth: '0', display: 'flex', alignItems: 'flex-start', '& > *': { width: '100%' } }}>
-                    {child}
-                </Box>
-            ))}
-        </Box>
-    );
 
     const eduToday = new Date().toISOString().split('T')[0];
 
